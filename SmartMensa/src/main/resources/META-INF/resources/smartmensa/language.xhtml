@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:body>
+		<h:form style="float:left">
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{labels['labelChooseLanguage']}" />
+				<h:selectOneMenu value="#{i18nBean.localeCode}"
+								 valueChangeListener="#{i18nBean.onLocaleCodeChange}">
+					<f:selectItems value="#{i18nBean.languages}" 
+								   var="language"
+								   itemValue="#{language.languageCode}" 
+								   itemLabel="#{language.languageDescription}" />
+					<f:ajax render="@all" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+
+		</h:form>
+		<br/>
+<br/>
+<br/>	
+</h:body>
+</html>
