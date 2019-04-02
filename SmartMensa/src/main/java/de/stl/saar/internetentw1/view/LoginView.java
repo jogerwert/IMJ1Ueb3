@@ -83,8 +83,14 @@ public class LoginView {
 		return null;
 	}
 	
-	public void logOut(ActionEvent actionEvent) {
+//	public void logOut(ActionEvent actionEvent) {
+//		currentUser = null;
+//	}
+	
+	public String logout() {
 		currentUser = null;
+		
+		return "login";
 	}
 	
 	public String getUsername() {

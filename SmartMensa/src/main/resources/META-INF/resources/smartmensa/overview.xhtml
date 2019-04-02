@@ -16,12 +16,18 @@
 	<ui:define name="body">
 		<h:form>			
 			<h:outputText value="User"/>
+			<p><h:commandLink action="#{loginView.logout}" 
+							value="#{labels.editProfile}" 
+							immediate="true"/></p>
+							
+			<p><h:commandLink action="#{loginView.logout}" 
+							value="#{labels.viewOrders}" 
+							immediate="true"/></p>
+							
+			<p><h:commandLink action="#{loginView.logout}" 
+							value="#{labels.labelLogout}" 
+							immediate="true"/></p>
 		</h:form>
-	<ul>
-		<li><a href="/login.jsf" target="_blank">#{labels.editProfile}</a></li>
-		<li><a href="/login.jsf" target="_blank">#{labels.viewOrders}</a></li> 
-		<li><a href="/login.jsf" target="_blank">#{labels.labelLogout}</a></li>
-	</ul>
 	</ui:define>
 	</ui:composition>
 </h:body>
