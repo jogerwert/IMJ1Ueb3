@@ -14,15 +14,19 @@
 	</ui:define>
 	
 	<ui:define name="body">
-		<h:form>
-			
+		<h:form>			
+			<f:event listener="#{loginView.initialize}" 
+				 type="preRenderView" />
 			<h:panelGrid columns="2">
-				<h:outputText value="#{labels.labelUsername}" /> 
-				<h:inputText/>
-				<h:outputText value="#{labels.labelPassword}" /> 
-				<h:inputText/>
+					<h:outputText value="#{labels.labelUsername}" /> 
+					<h:inputText value="#{loginView.username}" validator="#{loginView.validateUsername}"/>
+					<h:outputText value="#{labels.labelPassword}" /> 
+					<h:inputText value="#{loginView.password}" validator="#{loginView.validatePassword}"/>
 			</h:panelGrid>
-			<h:commandButton value="#{labels.buttonLogin}" />
+			<h:messages/>
+
+			<h:commandButton value="#{labels.buttonLogin}"
+							action="#{loginView.login}" />
 		</h:form>
 	</ui:define>
 	</ui:composition>

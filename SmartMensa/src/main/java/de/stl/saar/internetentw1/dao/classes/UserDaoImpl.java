@@ -28,6 +28,7 @@ public class UserDaoImpl implements UserDao {
 	@PostConstruct
 	public void initialize() {
 		userTable = new HashMap<>();
+		roleDao = new RoleDaoImpl();
 		final Role adminRole = roleDao.findRoleByName("admin");
 		final Role userRole = roleDao.findRoleByName("user");
 		final User user1 = new User(1, "colbertz", "1234", adminRole);
@@ -93,6 +94,7 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public List<User> findAllUsers() {
+		initialize();
 		final Collection<User> userCollection = userTable.values();
 		final List<User> users = new ArrayList<>(userCollection);
 		return users;
@@ -101,5 +103,21 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void setRoleDao(RoleDao roleDao) {
 		this.roleDao = roleDao;
+	}
+	
+	@Override
+	public User findUserByName(String username) {
+		User resultUser = null;
+		final Collection<User> userCollection = userTable.values();
+		final List<User> userList = new ArrayList<>(userCollection);
+		
+		for(User u : userList) {
+			String cmpName = u.getUsername();
+			if(username.equals(cmpName)) {
+				resultUser = u;
+			}
+		}
+
+		return resultUser;
 	}
 }

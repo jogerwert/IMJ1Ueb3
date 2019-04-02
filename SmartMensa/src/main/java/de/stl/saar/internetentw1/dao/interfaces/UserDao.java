@@ -14,4 +14,5 @@ public interface UserDao {
 
 	void setRoleDao(RoleDao roleDao);
 
+	User findUserByName(String username);
 }
