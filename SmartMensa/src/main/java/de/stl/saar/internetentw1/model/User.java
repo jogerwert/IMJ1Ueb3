@@ -1,6 +1,10 @@
 package de.stl.saar.internetentw1.model;
 
+import de.stl.saar.internetentw1.utils.StringUtils;
+
 public class User {
+	private static final String ADMIN = "admin";
+	
 	private int userId;
 	private String username;
 	private String password;
@@ -45,5 +49,9 @@ public class User {
 	
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	public boolean isAdmin() {
+		return StringUtils.areStringsEqual(this.role.getRoleName(), ADMIN);
 	}
 }
