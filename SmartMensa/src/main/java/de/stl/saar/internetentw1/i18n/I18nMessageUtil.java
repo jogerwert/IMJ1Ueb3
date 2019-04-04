@@ -15,7 +15,7 @@ public class I18nMessageUtil {
 	private static final String INVALID_EMAIL = "invalidEmailaddress";
 	private static final String NOT_A_HTW_EMAIL = "notAHtwEmail";
 	private static final String PASSWORDS_NOT_EQUAL= "passwordsNotEqual";
-	private static final String AUTHENTICATION_PASSWORD_ERROR= "authenticationErrorPassword";
+	private static final String AUTHENTICATION_PASSWORD_ERROR= "authenticationError";
 	private static final String AUTHENTICATION_USERNAME_ERROR="authenticationErrorUsername";
 	
 	
