@@ -19,7 +19,10 @@
 				 type="preRenderView" />
 			<h:panelGrid columns="2">
 					<h:outputText value="#{labels.labelUsername}" /> 
-					<h:inputText value="#{loginView.username}" validator="#{loginView.validateUsername}"/>
+					<h:inputText value="#{loginView.username}" validator="#{loginView.validateUsername}">
+						<f:event type="javax.faces.event.PostValidateEvent"
+						 	listener="#{loginView.postValidateUsername}" />
+					</h:inputText>
 					<h:outputText value="#{labels.labelPassword}" /> 
 					<h:inputText value="#{loginView.password}" validator="#{loginView.validatePassword}"/>
 			</h:panelGrid>
