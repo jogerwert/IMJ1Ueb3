@@ -4,6 +4,7 @@ package de.stl.saar.internetentw1.view;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import de.stl.saar.internetentw1.model.User;
 import de.stl.saar.internetentw1.utils.JsfUtils;
@@ -15,7 +16,7 @@ import de.stl.saar.internetentw1.utils.JsfUtils;
  */
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class LinkView {
 	private String isAdmin;
 	private User currentUser;	
