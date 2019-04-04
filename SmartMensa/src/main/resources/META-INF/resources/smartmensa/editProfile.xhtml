@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:body>
+	<ui:composition template="template.xhtml">
+	
+	<ui:define name="pageTitle">
+		<h1>#{labels.editProfile}</h1>
+	</ui:define>
+	
+	<ui:define name="body">
+		<h:form>			
+			<h:outputText value="editProfile"/>
+			<h:panelGrid columns="3">
+					<h:outputText value="#{labels.labelUsername}" /> 
+					<h:inputText value="#{loginView.username}" validator="#{loginView.validateUsername}" id="txtUsername"/>
+					<h:message for="txtUsername"/>
+					
+					<h:outputText value="#{labels.labelEmailaddress}" /> 
+					<h:inputText id="txtEmail"/>
+					<h:message for="txtEmail"/>
+					
+					<h:outputText value="#{labels.labelRole}" /> 
+					<h:selectOneListbox  id="txtRole"/>
+					<h:message for="txtRole"/>
+					
+					<h:outputText value="#{labels.labelPassword}" /> 
+					<h:inputText value="#{loginView.password}" validator="#{loginView.validatePassword}" id="txtPassword"/>
+					<h:message for="txtPassword"/>
+					
+					<selectBooleanCheckbox />
+					<h:commandButton value="#{labels.labelNewPassword}"
+							action="#{loginView.logout}" />
+					<h:commandButton value="#{labels.buttonSave}"
+							action="#{loginView.logout}" />
+			</h:panelGrid>
+			<h:commandButton value="#{labels.buttonCancel}"
+							action="overview" />
+		</h:form>
+	</ui:define>
+	</ui:composition>
+</h:body>
+</html>
