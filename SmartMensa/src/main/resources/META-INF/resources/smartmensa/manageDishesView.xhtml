@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
       
 <h:head>
-	<title>SmartMensa - Verwaltung der Gerichte</title>
+	<title>SmartMensa - #{labels.labelManageDishes}</title>
 </h:head>
 
 <h:body>
@@ -14,9 +14,12 @@
 	
 		<ui:composition template="template.xhtml">
 		<ui:define name="pageTitle">
-			<h1></h1>
+			<h1>#{labels.labelManageDishes}</h1>
 		</ui:define>
 		
+		<ui:define name="body">
+		
+		</ui:define>
 		</ui:composition>
 	
 	</f:view>
