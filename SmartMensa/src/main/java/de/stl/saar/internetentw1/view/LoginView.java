@@ -72,12 +72,8 @@ public class LoginView {
 		for (final User user: userList) {
 			if (user.getUsername().equals(username)) {
 				if (user.getPassword().equals(password)) {
-					currentUser = user; 
-					if(isUserAdmin()) {
-						return "overviewAdmin";
-					}else {		
+					currentUser = user; 	
 						return "overview";
-					}
 				}
 			}
 		}
