@@ -11,21 +11,21 @@
 
 <h:body>
 	<f:view>
-	
 		<ui:composition template="template.xhtml">
 		<ui:define name="pageTitle">
 			<h1>#{labels.labelManageDishes}</h1>
 		</ui:define>
 		
 		<ui:define name="body">
+		<h:form>
 		
+			<ui:include src="dishesTable.xhtml" />
+			
+			<h:messages globalOnly="true" 
+					    showDetail="true" showSummary="false" />
+		</h:form>
 		</ui:define>
 		</ui:composition>
-	
 	</f:view>
-
-
 </h:body>
-      
-      
 </html>
