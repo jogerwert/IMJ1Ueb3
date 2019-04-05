@@ -42,9 +42,9 @@
 				<h:column>
 					<h:commandButton value="#{labels.buttonChangeDish}" action="newAndChangeDish">
 						<f:param name="dishId" value="#{dish.dishId}" />
-						<f:param name="oldDishName" value="#{dish.dishName}" />
-						<f:param name="oldDishPrice" value="#{dish.price}" />
-						<f:param name="oldDishCategory" value="#{dish.category}" />
+						<f:param name="dishName" value="#{dish.dishName}" />
+						<f:param name="dishPrice" value="#{dish.price}" />
+						<f:param name="dishCategory" value="#{dish.category}" />
 					</h:commandButton>
 					<h:commandButton value="#{labels.buttonRemoveDish}" actionListener="#{manageDishes.removeDish}" />
 				</h:column>

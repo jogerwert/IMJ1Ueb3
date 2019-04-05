@@ -21,6 +21,9 @@
 		
 			<ui:include src="dishesTable.xhtml" />
 			
+			<h:commandButton value="#{labels.buttonNewDish}" action="newAndChangeDish" />
+			<h:commandButton value="#{labels.buttonBack}" action="overview" />
+			
 			<h:messages globalOnly="true" 
 					    showDetail="true" showSummary="false" />
 		</h:form>
