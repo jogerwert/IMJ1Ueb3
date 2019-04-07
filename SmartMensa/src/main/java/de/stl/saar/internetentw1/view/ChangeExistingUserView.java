@@ -3,16 +3,21 @@ package de.stl.saar.internetentw1.view;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.faces.validator.ValidatorException;
 
 import de.stl.saar.internetentw1.dao.classes.RoleDaoImpl;
 import de.stl.saar.internetentw1.dao.classes.UserDaoImpl;
 import de.stl.saar.internetentw1.dao.interfaces.RoleDao;
 import de.stl.saar.internetentw1.dao.interfaces.UserDao;
+import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
 import de.stl.saar.internetentw1.utils.JsfUtils;
@@ -68,13 +73,15 @@ public class ChangeExistingUserView {
 		password = RandomUtils.createRandomString();
 	}
 
-//	public String getIsAdmin() {
-//		return this.isAdmin;
-//	}
-//	
-//	public void setIsAdmin(String isAdmin) {
-//		this.isAdmin = isAdmin;
-//	}
+	public void validateUsername(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException {
+		String tmpUsername = (String) value;
+		User tmpUser = userService.findUserByName(tmpUsername);
+		
+		if(tmpUser != null) {
+			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getErrorUsernameAlreadyExistsString()));		
+		}
+	}
+	
 	public String getPassword() {
 		return password;
 	}

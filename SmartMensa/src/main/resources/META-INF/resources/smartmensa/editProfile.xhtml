@@ -17,7 +17,13 @@
 		<h:form>			
 			<h:panelGrid columns="3">
 					<h:outputText value="#{labels.labelUsername}" /> 
-					<h:inputText value="#{editProfileView.username}" id="txtUsername"/>
+					<h:inputText value="#{editProfileView.username}" id="txtUsername"
+						 validatorMessage="#{msg.usernameLengthOrAlreadyInUseError}"
+						 requiredMessage="#{msg.usernameRequired}" 
+						 required="true"
+						 validator="#{editProfileView.validateUsername}">
+						<f:validateLength minimum="3" maximum="10" />
+					</h:inputText>
 					<h:message for="txtUsername"/>
 					
 					<h:outputText value="#{labels.labelEmailaddress}" /> 
@@ -34,7 +40,12 @@
 					<h:message for="slctRole" rendered="#{editProfileView.isAdmin}"/>
 					
 					<h:outputText value="#{labels.labelPassword}" /> 
-					<h:inputText value="#{editProfileView.password}" id="txtPassword"/>
+					<h:inputText value="#{editProfileView.password}" id="txtPassword"
+						 	 validatorMessage="#{msg.passwordLengthError}"
+							 requiredMessage="#{msg.passwordRequired}" 
+						 	 required="true">
+						<f:validateLength minimum="3" />
+					</h:inputText>
 					<h:message for="txtPassword"/>
 					
 					<h:selectBooleanCheckbox rendered="#{editProfileView.isAdmin}" value="#{editProfileView.isPasswordChangeNecessary}" id="checkBoxPassword"/>

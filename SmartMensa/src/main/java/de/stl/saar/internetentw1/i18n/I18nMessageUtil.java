@@ -18,6 +18,8 @@ public class I18nMessageUtil {
 	private static final String AUTHENTICATION_PASSWORD_ERROR= "authenticationError";
 	private static final String AUTHENTICATION_USERNAME_ERROR="authenticationErrorUsername";
 	
+	private static final String USERNAME_ALREADY_EXISTS_ERROR="userNameAlreadyExistsError";
+	
 	private static final String LINK_MANAGE_DISHES="manageDishes";
 	private static final String LINK_MANAGE_USERS="manageUsers";
 	
@@ -32,6 +34,7 @@ public class I18nMessageUtil {
 		labelsResourceBundle = I18nUtil.getComponentLabelsResourceBundle();
 	}
 
+//-------------------------Messages---------------------------------
 	public static final String getInvalidEmailString() {
 		return messagesResourceBundle.getString(INVALID_EMAIL);
 	}
@@ -52,6 +55,12 @@ public class I18nMessageUtil {
 		return messagesResourceBundle.getString(AUTHENTICATION_USERNAME_ERROR);
 	}
 	
+	public static String getErrorUsernameAlreadyExistsString() {
+		return messagesResourceBundle.getString(USERNAME_ALREADY_EXISTS_ERROR);
+	}
+	
+	
+	//-------------------------Labels---------------------------------	  
 	public static final String getLinkManageDishesString() {
 		return labelsResourceBundle.getString(LINK_MANAGE_DISHES);
 	}
@@ -59,4 +68,6 @@ public class I18nMessageUtil {
 	public static final String getLinkManageUsersString() {
 		return labelsResourceBundle.getString(LINK_MANAGE_USERS);
 	}
+
+
 }

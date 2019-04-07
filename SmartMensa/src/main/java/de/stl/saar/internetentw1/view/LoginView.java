@@ -31,6 +31,7 @@ import de.stl.saar.internetentw1.constants.*;
 @SessionScoped
 public class LoginView {
 	private UserDao userService;
+	private DishDao dishService;
 	private String username;
 	private String password;
 	private User currentUser;	
@@ -39,6 +40,7 @@ public class LoginView {
 	@PostConstruct
 	public void initializeBean() {
 		userService = new UserDaoImpl();
+		dishService = new DishDaoImpl();
 	}
 	
 	public void initialize(ComponentSystemEvent event) {
@@ -136,6 +138,14 @@ public class LoginView {
 
 	public void setUserService(UserDao userService) {
 		this.userService = userService;
+	}
+
+	public DishDao getDishService() {
+		return dishService;
+	}
+
+	public void setDishService(DishDao dishService) {
+		this.dishService = dishService;
 	}
 
 	public String getUrlIngameLinks() {

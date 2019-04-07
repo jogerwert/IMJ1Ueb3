@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<h:body>
+	<ui:composition template="template.xhtml">
+	
+	<ui:define name="pageTitle">
+				<h1>#{labels.manageOrders}</h1>
+	</ui:define>
+	
+	
+	
+	<ui:define name="body">
+		<h1>#{labels.menu}</h1>
+		<h:form>			
+			<h:dataTable var="varCurrentDish" value="#{manageOrdersView.dishDataTable}">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{labels.labelNumber}"/>
+					</f:facet>
+					<h:outputText value="#{varCurrentDish.dishId}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{labels.labelName}"/>
+					</f:facet>
+					<h:outputText value="#{varCurrentDish.dishName}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{labels.labelPrice}"/>
+					</f:facet>
+					<h:outputText value="#{varCurrentDish.price}"/>
+				</h:column>
+				<h:column>
+					<h:graphicImage width="40%" library="images" name="#{varCurrentDish.imageName}.jpg"/>
+				</h:column>
+				<h:column>
+					<h:commandButton value="#{labels.buttonAddToCart}" />
+				</h:column>
+			</h:dataTable>
+			
+
+		</h:form>
+	</ui:define>
+	</ui:composition>
+</h:body>
+</html>
