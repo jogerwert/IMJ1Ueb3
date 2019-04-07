@@ -17,37 +17,35 @@
 		<h:form>			
 			<h:panelGrid columns="3">
 					<h:outputText value="#{labels.labelUsername}" /> 
-					<h:inputText value="#{editProfileView.username}" id="txtUsername"/>
+					<h:inputText value="#{changeExistingUserView.username}" id="txtUsername"/>
 					<h:message for="txtUsername"/>
 					
 					<h:outputText value="#{labels.labelEmailaddress}" /> 
 					<h:inputText id="txtEmail"/>
 					<h:message for="txtEmail"/>
 					
-					<h:outputText value="#{labels.labelRole}" rendered="#{editProfileView.isAdmin}" /> 
-					<h:selectOneListbox id="slctRole" value="#{editProfileView.role}" rendered="#{editProfileView.isAdmin}">
-							<f:selectItems value="#{editProfileView.roleList}" 
+					<h:outputText value="#{labels.labelRole}"/> 
+					<h:selectOneListbox id="slctRole" value="#{changeExistingUserView.role}">
+							<f:selectItems value="#{changeExistingUserView.roleList}" 
 							   var="currentRole"
 							   itemLabel="#{currentRole.roleName}"
 							   itemValue="#{currentRole}"/>
 					</h:selectOneListbox>
-					<h:message for="slctRole" rendered="#{editProfileView.isAdmin}"/>
+					<h:message for="slctRole"/>
 					
 					<h:outputText value="#{labels.labelPassword}" /> 
-					<h:inputText value="#{editProfileView.password}" id="txtPassword"/>
+					<h:inputText value="#{changeExistingUserView.password}" id="txtPassword"/>
 					<h:message for="txtPassword"/>
 					
-					<h:selectBooleanCheckbox rendered="#{editProfileView.isAdmin}" value="#{editProfileView.isPasswordChangeNecessary}" id="checkBoxPassword"/>
+					<h:selectBooleanCheckbox value="#{changeExistingUserView.isPasswordChangeNecessary}" id="checkBoxPassword" />
 					<h:commandButton value="#{labels.labelNewPassword}"
-							actionListener="#{editProfileView.createRandomPassword}" rendered="#{editProfileView.isAdmin}" >
+							actionListener="#{changeExistingUserView.createRandomPassword}" rendered="#{editProfileView.isAdmin}" >
 								
 							<f:ajax render="txtPassword checkBoxPassword"/>	
 					</h:commandButton>
-					<h:commandButton value="#{labels.buttonSave}" actionListener="#{editProfileView.saveChangesToCurrentUser}"/>
+					<h:commandButton value="#{labels.buttonSave}" actionListener="#{changeExistingUserView.saveChangesToSelectedUser}"/>
 					
 					<h:commandButton value="#{labels.buttonCancel}" action="overview" immediate="true">
-					</h:commandButton>
-					<h:commandButton value="#{labels.buttonSaveNewUser}" actionListener="#{editProfileView.createNewUser}" rendered="#{editProfileView.isAdmin}" >
 					</h:commandButton>
 			</h:panelGrid>
 			

@@ -17,28 +17,28 @@
 	
 	<ui:define name="body">
 		<h:form>			
-			<h:dataTable var="currentUser" value="#{manageUsersView.userDataTable}">
+			<h:dataTable var="varCurrentUser" value="#{manageUsersView.userDataTable}">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{labels.labelNumber}"/>
 					</f:facet>
-					<h:outputText value="#{currentUser.userId}"/>
+					<h:outputText value="#{varCurrentUser.userId}"/>
 				</h:column>
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{labels.labelUsername}"/>
 					</f:facet>
-					<h:outputText value="#{currentUser.username}"/>
+					<h:outputText value="#{varCurrentUser.username}"/>
 				</h:column>
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{labels.labelRole}"/>
 					</f:facet>
-					<h:outputText value="#{currentUser.role}"/>
+					<h:outputText value="#{varCurrentUser.role}"/>
 				</h:column>
 				<h:column>
-					<h:commandButton value="#{labels.buttonChange}" action="#{manageUsersView.toEditSelectedUser}">
-						<f:param name="selectedUserName" value="#{currentUser.username}"/>
+					<h:commandButton value="#{labels.buttonChange}" action="#{manageUsersView.toChangeExistingUser}">
+						<f:param name="selectedUserName" value="#{varCurrentUser.username}"/>
 					</h:commandButton>
 				</h:column>
 				<h:column>

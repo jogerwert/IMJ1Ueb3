@@ -30,7 +30,6 @@ import de.stl.saar.internetentw1.constants.*;
 @ManagedBean
 @SessionScoped
 public class LoginView {
-	private List<User> userList;
 	private UserDao userService;
 	private String username;
 	private String password;
@@ -40,7 +39,6 @@ public class LoginView {
 	@PostConstruct
 	public void initializeBean() {
 		userService = new UserDaoImpl();
-		userList = userService.findAllUsers();
 	}
 	
 	public void initialize(ComponentSystemEvent event) {
@@ -70,12 +68,17 @@ public class LoginView {
 	}
 	
 	public String login() {
+		List<User> userList = this.userService.findAllUsers();
 		for (final User user: userList) {
 			if (user.getUsername().equals(username)) {
 				if (user.getPassword().equals(password)) {
 					currentUser = user; 
-					selectedUserName = user.getUsername();
+					if(currentUser.getIsPasswordChangeNecessary()) {
+						return "changePassword";
+					}else {
 						return "overview";
+					}
+						
 				}
 			}
 		}
@@ -153,7 +156,7 @@ public class LoginView {
 //			}
 //		}
 //		
-		
+		List<User> userList = this.userService.findAllUsers();
 		for(User u : userList) {
 			if(u.getUsername().equals(this.username)) {
 				if(u.getPassword().equals(tmpPassword)) {

@@ -36,4 +36,9 @@ public class RandomUtils {
 	public static int nextInt() {
 		return random.nextInt();
 	}
+	
+	public static String createRandomString() {
+		final long randomLong = random.nextLong();
+		return String.valueOf(randomLong);
+	}
 }

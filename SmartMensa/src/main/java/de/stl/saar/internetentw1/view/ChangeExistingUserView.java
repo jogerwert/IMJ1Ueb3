@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
@@ -12,81 +11,70 @@ import javax.faces.model.ListDataModel;
 
 import de.stl.saar.internetentw1.dao.classes.RoleDaoImpl;
 import de.stl.saar.internetentw1.dao.classes.UserDaoImpl;
+import de.stl.saar.internetentw1.dao.interfaces.RoleDao;
 import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
 import de.stl.saar.internetentw1.utils.JsfUtils;
+import de.stl.saar.internetentw1.utils.RandomUtils;
 
 @ManagedBean
 @ViewScoped
-public class ManageUsersView {
+public class ChangeExistingUserView {
 	private User currentUser;
-	private String selectedUserName;
+	private User userToChange;
 	private List<Role> roleList;
 	private String password;
 	private String username;
-	private String isAdmin;
-	private String isNotAdmin;
 	private String role;
-	private DataModel<User> userDataTable;
 	private List<User> userList;
 	private int userID;
+	private boolean isPasswordChangeNecessary;
 	private UserDao userService;
+
 	
 	@PostConstruct
 	public void initialize() {
+		currentUser = (User)JsfUtils.getBeanAttribute("currentUser", "loginView", User.class);
 		userService = (UserDaoImpl)JsfUtils.getBeanAttribute("userService", "loginView", UserDaoImpl.class);
-		currentUser = (User)JsfUtils.getBeanAttribute("currentUser", "linkView", User.class);
+
+		String selectedUsernameParam = JsfUtils.getParameterByName("selectedUserName");
+		userToChange = userService.findUserByName(selectedUsernameParam);
 		
-		if(currentUser.isAdmin()) {
-			isAdmin = "true";
-			isNotAdmin = "false";
-		}else {
-			isAdmin = "false";
-			isNotAdmin = "true";
-		}
-		password = currentUser.getPassword();
-		username = currentUser.getUsername();
-		role = currentUser.getRole().toString();
-		userID = currentUser.getUserId();
+		isPasswordChangeNecessary = userToChange.getIsPasswordChangeNecessary();
+		password = userToChange.getPassword();
+		username = userToChange.getUsername();
+		role = userToChange.getRole().toString();
+		userID = userToChange.getUserId();
 		
 		roleList = new RoleDaoImpl().findAllRoles();
 		
 		userList = userService.findAllUsers();
-		userDataTable = new ListDataModel<User>();						
-		userDataTable.setWrappedData(userList);
+	}
+	
+	public void saveChangesToSelectedUser(ActionEvent event) {
+		userToChange.setUsername(username);
+		userToChange.setPassword(password);
+		userToChange.setRole(new RoleDaoImpl().findRoleByName(role));
+		userToChange.setIsPasswordChangeNecessary(isPasswordChangeNecessary);
+			
+	}
+	
+	
+	public void createRandomPassword(ActionEvent event) {
+		if(currentUser.isAdmin()) {
+			isPasswordChangeNecessary = true;
+		}
+		password = RandomUtils.createRandomString();
+	}
 
-	}
-	
-	public void delete(ActionEvent event) {
-		int selectedUserIndex = userDataTable.getRowIndex();
-		User selectedUser = this.userList.get(selectedUserIndex);
-		this.userList.remove(selectedUserIndex);
-		
-		userService.removeUser(selectedUser.getUserId());
-	}
-	
-	
-	public String toChangeExistingUser() {
-		return "changeExistingUser";
-	}
-	
-	
-	public User getCurrentUser() {
-		return this.currentUser;
-	}
-	
-	public void setCurrentUser(User user) {
-		this.currentUser = user;
-	}
-	
-	public String getIsAdmin() {
-		return this.isAdmin;
-	}
-	
-	public void setIsAdmin(String isAdmin) {
-		this.isAdmin = isAdmin;
-	}
+//	public String getIsAdmin() {
+//		return this.isAdmin;
+//	}
+//	
+//	public void setIsAdmin(String isAdmin) {
+//		this.isAdmin = isAdmin;
+//	}
 	public String getPassword() {
 		return password;
 	}
@@ -111,15 +99,6 @@ public class ManageUsersView {
 		this.userList = userList;
 	}
 
-
-	public DataModel<User> getUserDataTable() {
-		return userDataTable;
-	}
-
-	public void setUserDataTable(DataModel<User> userDataTable) {
-		this.userDataTable = userDataTable;
-	}
-
 	public List<Role> getRoleList() {
 		return roleList;
 	}
@@ -135,14 +114,14 @@ public class ManageUsersView {
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-	public String getIsNotAdmin() {
-		return isNotAdmin;
-	}
-
-	public void setIsNotAdmin(String isNotAdmin) {
-		this.isNotAdmin = isNotAdmin;
-	}
+//
+//	public String getIsNotAdmin() {
+//		return isNotAdmin;
+//	}
+//
+//	public void setIsNotAdmin(String isNotAdmin) {
+//		this.isNotAdmin = isNotAdmin;
+//	}
 
 	public int getUserID() {
 		return userID;
@@ -152,15 +131,21 @@ public class ManageUsersView {
 		this.userID = userID;
 	}
 
-	public String getSelectedUserName() {
-		return selectedUserName;
+	public User getCurrentUser() {
+		return currentUser;
 	}
 
-	public void setSelectedUserName(String selectedUserName) {
-		this.selectedUserName = selectedUserName;
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
 	}
 
+	public boolean getIsPasswordChangeNecessary() {
+		return isPasswordChangeNecessary;
+	}
 
+	public void setIsPasswordChangeNecessary(boolean isPasswordChangeNecessary) {
+		this.isPasswordChangeNecessary = isPasswordChangeNecessary;
+	}
 
 
 }

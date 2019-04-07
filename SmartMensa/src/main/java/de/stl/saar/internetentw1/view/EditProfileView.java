@@ -9,8 +9,6 @@ import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
-import org.h2.util.StringUtils;
-
 import de.stl.saar.internetentw1.dao.classes.RoleDaoImpl;
 import de.stl.saar.internetentw1.dao.classes.UserDaoImpl;
 import de.stl.saar.internetentw1.dao.interfaces.RoleDao;
@@ -18,11 +16,11 @@ import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
 import de.stl.saar.internetentw1.utils.JsfUtils;
+import de.stl.saar.internetentw1.utils.RandomUtils;
 
 @ManagedBean
 @ViewScoped
 public class EditProfileView {
-	private String selectedUserName;
 	private User currentUser;
 	private List<Role> roleList;
 	private String password;
@@ -30,25 +28,16 @@ public class EditProfileView {
 	private String isAdmin;
 	private String isNotAdmin;
 	private String role;
-	private DataModel<User> userDataTable;
 	private List<User> userList;
 	private int userID;
 	private boolean isPasswordChangeNecessary;
 	private UserDao userService;
-	
-	private User selectedUser;
+
 	
 	@PostConstruct
 	public void initialize() {
 		currentUser = (User)JsfUtils.getBeanAttribute("currentUser", "loginView", User.class);
 		userService = (UserDaoImpl)JsfUtils.getBeanAttribute("userService", "loginView", UserDaoImpl.class);
-		
-		this.selectedUserName = JsfUtils.getParameterByName("selectedUserName");
-		if(!StringUtils.isNullOrEmpty(this.selectedUserName)) {
-			selectedUser = userService.findUserByName(this.selectedUserName);
-		}else {
-			selectedUser = currentUser;
-		}
 
 		if(currentUser.isAdmin()) {
 			isAdmin = "true";
@@ -57,58 +46,45 @@ public class EditProfileView {
 			isAdmin = "false";
 			isNotAdmin = "true";
 		}
-		password = selectedUser.getPassword();
-		username = selectedUser.getUsername();
-		role = selectedUser.getRole().toString();
-		userID = selectedUser.getUserId();
+		isPasswordChangeNecessary = currentUser.getIsPasswordChangeNecessary();
+		password = currentUser.getPassword();
+		username = currentUser.getUsername();
+		role = currentUser.getRole().toString();
+		userID = currentUser.getUserId();
 		
 		roleList = new RoleDaoImpl().findAllRoles();
 		
 		userList = userService.findAllUsers();
-		userDataTable = new ListDataModel<User>();						
-		userDataTable.setWrappedData(userList);
 	}
 	
-	public void saveNewOrExistingUser(ActionEvent event) {
-		//Falls Admin
-		//pruefe, ob es den User schon in der DB gibt 
-		//Lege Ihn an, falls nicht existent, sonst update ihn
-		//Falls kein Admin
-		//update werte NUR des currentUsers
-		//Validierung macht JSF
-		User newOrExistingUser = userService.findUserByName(selectedUser.getUsername());
-		if(selectedUser.isAdmin() && (selectedUser.getUserId() == currentUser.getUserId())){
-			newOrExistingUser = null;
-		}
-		RoleDao roleService = new RoleDaoImpl();
-		Role existingRole = roleService.findRoleByName(role);
-		
-		int newID = userList.size()+1;
-		
+	public void saveChangesToCurrentUser(ActionEvent event) {
 		if(currentUser.isAdmin()) {
-			if(newOrExistingUser == null) {
-				//lege an in db
-				newOrExistingUser = new User(newID, username, password, existingRole);
-				userService.addUser(newOrExistingUser);
-			}else {
-				//update den gefundenen user in db
-				//userService.removeUser(newOrExistingUser.getUserId());
-				newOrExistingUser.setUsername(username);
-				newOrExistingUser.setPassword(password);
-				newOrExistingUser.setRole(existingRole);
-				newOrExistingUser.setIsPasswordChangeNecessary(isPasswordChangeNecessary);
-				userService.addUser(newOrExistingUser);
-			}
-		}else {
-			//update currentUser
 			currentUser.setUsername(username);
 			currentUser.setPassword(password);
-			userService.addUser(currentUser);
-			//JsfUtils.setValueExpression("loginView", "currentUser.username", User.class, currentUser.getUsername());
+			currentUser.setRole(new RoleDaoImpl().findRoleByName(role));
+			currentUser.setIsPasswordChangeNecessary(isPasswordChangeNecessary);
+		}else {
+			currentUser.setUsername(username);
+			currentUser.setPassword(password);
 		}
 			
 	}
 	
+	public void createNewUser(ActionEvent event) {
+		if(currentUser.isAdmin()) {
+			Role selectedRole = new RoleDaoImpl().findRoleByName(role);
+			User newUser = new User(0, username, password, selectedRole );
+			newUser.setIsPasswordChangeNecessary(isPasswordChangeNecessary);
+			userService.addUser(newUser);
+		}	
+	}
+	
+	public void createRandomPassword(ActionEvent event) {
+		if(currentUser.isAdmin()) {
+			isPasswordChangeNecessary = true;
+		}
+		password = RandomUtils.createRandomString();
+	}
 
 	public String getIsAdmin() {
 		return this.isAdmin;
@@ -141,15 +117,6 @@ public class EditProfileView {
 		this.userList = userList;
 	}
 
-
-	public DataModel<User> getUserDataTable() {
-		return userDataTable;
-	}
-
-	public void setUserDataTable(DataModel<User> userDataTable) {
-		this.userDataTable = userDataTable;
-	}
-
 	public List<Role> getRoleList() {
 		return roleList;
 	}
@@ -180,14 +147,6 @@ public class EditProfileView {
 
 	public void setUserID(int userID) {
 		this.userID = userID;
-	}
-
-	public String getSelectedUserName() {
-		return selectedUserName;
-	}
-
-	public void setSelectedUserName(String selectedUserName) {
-		this.selectedUserName = selectedUserName;
 	}
 
 	public User getCurrentUser() {
