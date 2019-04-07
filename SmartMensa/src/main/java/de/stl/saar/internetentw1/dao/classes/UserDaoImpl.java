@@ -25,8 +25,7 @@ public class UserDaoImpl implements UserDao {
 	private Map<Integer, User> userTable;
 	private RoleDao roleDao;
 	
-	@PostConstruct
-	public void initialize() {
+	public UserDaoImpl() {
 		userTable = new HashMap<>();
 		roleDao = new RoleDaoImpl();
 		final Role adminRole = roleDao.findRoleByName("admin");
@@ -37,6 +36,24 @@ public class UserDaoImpl implements UserDao {
 		addUser(user1);
 		addUser(user2);
 		addUser(user3);
+	}
+	
+	/**
+	 * Inhalte in Konstruktor dieser Klasse übernommen, da trotz "@PostConstruct" NullPointerExceptions
+	 * passiert sind
+	 */
+	@PostConstruct
+	public void initialize() {
+//		userTable = new HashMap<>();
+//		roleDao = new RoleDaoImpl();
+//		final Role adminRole = roleDao.findRoleByName("admin");
+//		final Role userRole = roleDao.findRoleByName("user");
+//		final User user1 = new User(1, "colbertz", "1234", adminRole);
+//		final User user2 = new User(2, "wpy", "qwertz", userRole);
+//		final User user3 = new User(3, "api", "5678", userRole);
+//		addUser(user1);
+//		addUser(user2);
+//		addUser(user3);
 	}
 
 	@Override

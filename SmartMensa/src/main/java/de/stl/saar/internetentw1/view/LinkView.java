@@ -3,7 +3,6 @@ package de.stl.saar.internetentw1.view;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 import de.stl.saar.internetentw1.model.User;
@@ -20,11 +19,13 @@ import de.stl.saar.internetentw1.utils.JsfUtils;
 public class LinkView {
 	private String isAdmin;
 	private User currentUser;	
+	private String selectedUserName;
 	
 	
 	@PostConstruct
 	public void initialize() {
 		currentUser = (User)JsfUtils.getBeanAttribute("currentUser", "loginView", User.class);
+		selectedUserName = currentUser.getUsername();
 		if(currentUser.isAdmin()) {
 			isAdmin = "true";
 		}else {
@@ -54,5 +55,13 @@ public class LinkView {
 
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
+	}
+
+	public String getSelectedUserName() {
+		return selectedUserName;
+	}
+
+	public void setSelectedUserName(String selectedUserName) {
+		this.selectedUserName = selectedUserName;
 	}
 }

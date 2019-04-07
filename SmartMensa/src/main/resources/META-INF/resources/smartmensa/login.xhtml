@@ -28,8 +28,9 @@
 			</h:panelGrid>
 			<h:messages/>
 
-			<h:commandButton value="#{labels.buttonLogin}"
-							action="#{loginView.login}" />
+			<h:commandButton value="#{labels.buttonLogin}" action="#{loginView.login}">
+				<f:param name="selectedUserName" value="#{loginView.selectedUserName}"/>
+			</h:commandButton>
 		</h:form>
 	</ui:define>
 	</ui:composition>

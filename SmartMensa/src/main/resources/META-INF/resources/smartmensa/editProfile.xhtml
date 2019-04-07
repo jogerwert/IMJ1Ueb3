@@ -10,37 +10,42 @@
 	<ui:composition template="template.xhtml">
 	
 	<ui:define name="pageTitle">
-		<h1>#{labels.editProfile}</h1>
+				<h1>#{labels.createAndEditUser}</h1>
 	</ui:define>
 	
 	<ui:define name="body">
 		<h:form>			
-			<h:outputText value="editProfile"/>
 			<h:panelGrid columns="3">
 					<h:outputText value="#{labels.labelUsername}" /> 
-					<h:inputText value="#{loginView.username}" validator="#{loginView.validateUsername}" id="txtUsername"/>
+					<h:inputText value="#{editProfileView.username}" id="txtUsername"/>
 					<h:message for="txtUsername"/>
 					
 					<h:outputText value="#{labels.labelEmailaddress}" /> 
 					<h:inputText id="txtEmail"/>
 					<h:message for="txtEmail"/>
 					
-					<h:outputText value="#{labels.labelRole}" /> 
-					<h:selectOneListbox  id="txtRole"/>
-					<h:message for="txtRole"/>
+					<h:outputText value="#{labels.labelRole}" rendered="#{editProfileView.isAdmin}" /> 
+					<h:selectOneListbox id="slctRole" value="#{editProfileView.role}" rendered="#{editProfileView.isAdmin}">
+							<f:selectItems value="#{editProfileView.roleList}" 
+							   var="currentRole"
+							   itemLabel="#{currentRole.roleName}"
+							   itemValue="#{currentRole}"/>
+					</h:selectOneListbox>
+					<h:message for="slctRole" rendered="#{editProfileView.isAdmin}"/>
 					
 					<h:outputText value="#{labels.labelPassword}" /> 
-					<h:inputText value="#{loginView.password}" validator="#{loginView.validatePassword}" id="txtPassword"/>
+					<h:inputText value="#{editProfileView.password}" validator="#{loginView.validatePassword}" id="txtPassword"/>
 					<h:message for="txtPassword"/>
 					
-					<selectBooleanCheckbox />
+					<h:selectBooleanCheckbox rendered="#{editProfileView.isAdmin}" />
 					<h:commandButton value="#{labels.labelNewPassword}"
-							action="#{loginView.logout}" />
-					<h:commandButton value="#{labels.buttonSave}"
-							action="#{loginView.logout}" />
+							action="#{loginView.logout}" rendered="#{editProfileView.isAdmin}" />
+					<h:commandButton value="#{labels.buttonSave}" actionListener="#{editProfileView.saveNewOrExistingUser}"/>
+					
+					<h:commandButton value="#{labels.buttonCancel}" action="overview" immediate="true">
+					</h:commandButton>
 			</h:panelGrid>
-			<h:commandButton value="#{labels.buttonCancel}"
-							action="overview" /> <!-- hier abh. von admin/user zur richtigen seite zurück! -->
+			
 		</h:form>
 	</ui:define>
 	</ui:composition>

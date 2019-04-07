@@ -15,18 +15,20 @@
 	
 	<ui:define name="body">
 		<h:form>			
-			<h:outputText value="User oder Admin"/>
 			<p><h:commandLink action="#{linkView.logout}" 
 							value="#{labels.manageDishes}" 
 							immediate="true" rendered="#{linkView.isAdmin}" /></p>
 
-			<p><h:commandLink action="editProfile" 
-							value="#{labels.manageUsers}" 
+			<p><h:commandLink action="manageUsers" 
+							value="#{labels.toManageUsers}" 
 							immediate="true" rendered="#{linkView.isAdmin}"/></p>
 			
 			<p><h:commandLink action="editProfile" 
 							value="#{labels.editProfile}" 
-							immediate="true"/></p>
+							immediate="true">
+				<f:param name="selectedUserName" value="#{linkView.selectedUserName}"/>
+			   </h:commandLink>			
+			</p>
 							
 			<p><h:commandLink action="#{linkView.logout}" 
 							value="#{labels.viewOrders}" 

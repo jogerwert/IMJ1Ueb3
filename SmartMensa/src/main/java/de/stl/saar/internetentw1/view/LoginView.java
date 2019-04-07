@@ -34,7 +34,8 @@ public class LoginView {
 	private UserDao userService;
 	private String username;
 	private String password;
-	private User currentUser;	  
+	private User currentUser;	
+	private String selectedUserName;
 	
 	@PostConstruct
 	public void initializeBean() {
@@ -72,7 +73,8 @@ public class LoginView {
 		for (final User user: userList) {
 			if (user.getUsername().equals(username)) {
 				if (user.getPassword().equals(password)) {
-					currentUser = user; 	
+					currentUser = user; 
+					selectedUserName = user.getUsername();
 						return "overview";
 				}
 			}
@@ -114,6 +116,25 @@ public class LoginView {
 		this.currentUser = currentUser;
 	}
 	
+	
+	
+	public String getSelectedUserName() {
+		return selectedUserName;
+	}
+
+	public void setSelectedUserName(String selectedUserName) {
+		this.selectedUserName = selectedUserName;
+	}
+
+	
+	public UserDao getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserDao userService) {
+		this.userService = userService;
+	}
+
 	public String getUrlIngameLinks() {
 		if (isUserLoggedIn()) {
 			return UrlConstants.USER_LINKS;
@@ -162,4 +183,6 @@ public class LoginView {
 			this.username = inputText.getValue().toString();
 		}
 	}
+	
+	
 }

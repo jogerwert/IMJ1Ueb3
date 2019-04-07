@@ -9,6 +9,7 @@ public class User {
 	private String username;
 	private String password;
 	private Role role;
+	private boolean isPasswordChangeNecessary;
 
 	public User(int userId, String username, String password, Role role) {
 		super();
@@ -16,6 +17,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.role = role;
+		this.isPasswordChangeNecessary = false;
 	}
 
 	public int getUserId() {
@@ -53,5 +55,13 @@ public class User {
 	
 	public boolean isAdmin() {
 		return StringUtils.areStringsEqual(this.role.getRoleName(), ADMIN);
+	}
+
+	public boolean getIsPasswordChangeNecessary() {
+		return isPasswordChangeNecessary;
+	}
+
+	public void setIsPasswordChangeNecessary(boolean isPasswordChangeNecessary) {
+		this.isPasswordChangeNecessary = isPasswordChangeNecessary;
 	}
 }

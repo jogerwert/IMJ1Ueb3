@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<h:body>
+	<ui:composition template="template.xhtml">
+	
+	<ui:define name="pageTitle">
+				<h1>#{labels.manageUsers}</h1>
+	</ui:define>
+	
+	
+	
+	<ui:define name="body">
+		<h:form>			
+			<h:dataTable var="currentUser" value="#{manageUsersView.userDataTable}">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{labels.labelNumber}"/>
+					</f:facet>
+					<h:outputText value="#{currentUser.userId}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{labels.labelUsername}"/>
+					</f:facet>
+					<h:outputText value="#{currentUser.username}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{labels.labelRole}"/>
+					</f:facet>
+					<h:outputText value="#{currentUser.role}"/>
+				</h:column>
+				<h:column>
+					<h:commandButton value="#{labels.buttonChange}" action="#{manageUsersView.toEditSelectedUser}">
+						<f:param name="selectedUserName" value="#{currentUser.username}"/>
+					</h:commandButton>
+				</h:column>
+				<h:column>
+					<h:commandButton value="#{labels.buttonDelete}" actionListener="#{manageUsersView.delete}"/>
+				</h:column>
+			</h:dataTable>
+			
+			<h:commandButton value="#{labels.buttonNew}" action="editProfile">
+			</h:commandButton>
+			<h:commandButton value="#{labels.buttonBack}" action="overview" />
+
+		</h:form>
+	</ui:define>
+	</ui:composition>
+</h:body>
+</html>
