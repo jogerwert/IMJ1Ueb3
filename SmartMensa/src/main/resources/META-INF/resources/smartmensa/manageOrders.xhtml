@@ -6,6 +6,11 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
+
+<h:head>
+	<title>SpaceGame - Zu den Waffen!</title>
+</h:head>
+
 <h:body>
 	<ui:composition template="template.xhtml">
 	
@@ -35,17 +40,39 @@
 					<f:facet name="header">
 						<h:outputText value="#{labels.labelPrice}"/>
 					</f:facet>
-					<h:outputText value="#{varCurrentDish.price}"/>
+					<h:outputText value="#{varCurrentDish.price}">
+						<f:convertNumber locale="#{i18nBean.localeCode}" type="currency" currencySymbol="#{labels.currencySymbol}"/>
+					</h:outputText>
 				</h:column>
 				<h:column>
 					<h:graphicImage width="35%" library="images" name="#{varCurrentDish.imageName}.jpg"/>
 				</h:column>
 				<h:column>
-					<h:commandButton value="#{labels.buttonAddToCart}" />
+					<h:commandButton value="#{labels.buttonAddToCart}" actionListener="#{manageOrdersView.addDishToCart}">
+							<f:ajax render="@form"/>
+					</h:commandButton>
 				</h:column>
 			</h:dataTable>
 			
-
+			<h:panelGroup rendered="#{manageOrdersView.hasCartContent}">
+				<h1>#{labels.shoppingCart}</h1>
+				<h:dataTable var="varCartCurrentDish" value="#{manageOrdersView.cartDataTable}" >
+					<h:column>
+						<h:outputText value="#{varCartCurrentDish.dishName}"/>
+					</h:column>
+					<h:column>				
+						<h:outputText value="#{varCartCurrentDish.price}">
+							<f:convertNumber locale="#{i18nBean.localeCode}" type="currency" currencySymbol="#{labels.currencySymbol}"/>
+						</h:outputText>
+					</h:column>		
+					<h:column>
+						<h:commandButton value="#{labels.buttonDelete}" actionListener="#{manageOrdersView.removeDishFromCart}">
+							<f:ajax render="@form"/>
+						</h:commandButton>
+					</h:column>
+				</h:dataTable>
+				<h:commandButton value="#{labels.labelOrder}" />
+			</h:panelGroup>
 
 
 

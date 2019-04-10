@@ -1,5 +1,6 @@
 package de.stl.saar.internetentw1.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -7,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
@@ -28,8 +30,13 @@ public class ManageOrdersView {
 	private User currentUser;
 	private UserService userService;
 	private DishService dishService;
+	
 	private DataModel<Dish> dishDataTable;
 	private List<Dish> dishList;
+	
+	private DataModel<Dish> cartDataTable;
+	private List<Dish> cartList;
+	private boolean hasCartContent;
 	
 	@PostConstruct
 	public void initialize() {
@@ -42,6 +49,11 @@ public class ManageOrdersView {
 		dishDataTable = new ListDataModel<Dish>();						
 		dishDataTable.setWrappedData(dishList);
 
+		cartList = new ArrayList<Dish>();
+		cartDataTable = new ListDataModel<Dish>();
+		cartDataTable.setWrappedData(cartList);
+		hasCartContent = false;
+		
 	}
 	
 	public void delete(ActionEvent event) {
@@ -51,6 +63,24 @@ public class ManageOrdersView {
 //		
 //		userService.removeUser(selectedUser.getUserId());
 	}
+	
+	public void addDishToCart(ActionEvent event) {
+		int selectedDishIndex = dishDataTable.getRowIndex();
+		Dish selectedDish = dishList.get(selectedDishIndex);
+		hasCartContent = true;
+		
+		cartList.add(selectedDish);
+	}
+	
+	public void removeDishFromCart(ActionEvent event) {
+		int selectedDishIndex = cartDataTable.getRowIndex();
+		cartList.remove(selectedDishIndex);	
+		
+		if(cartList.isEmpty()) {
+			hasCartContent = false;
+		}
+	}
+	
 	
 	public User getCurrentUser() {
 		return this.currentUser;
@@ -90,6 +120,30 @@ public class ManageOrdersView {
 
 	public void setDishService(DishService dishService) {
 		this.dishService = dishService;
+	}
+
+	public DataModel<Dish> getCartDataTable() {
+		return cartDataTable;
+	}
+
+	public void setCartDataTable(DataModel<Dish> cartDataTable) {
+		this.cartDataTable = cartDataTable;
+	}
+
+	public List<Dish> getCartList() {
+		return cartList;
+	}
+
+	public void setCartList(List<Dish> cartList) {
+		this.cartList = cartList;
+	}
+
+	public boolean getHasCartContent() {
+		return hasCartContent;
+	}
+
+	public void setHasCartContent(boolean hasCartContent) {
+		this.hasCartContent = hasCartContent;
 	}
 
 
