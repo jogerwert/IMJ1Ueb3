@@ -20,6 +20,7 @@ import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
+import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 import de.stl.saar.internetentw1.utils.RandomUtils;
 
@@ -36,13 +37,13 @@ public class EditProfileView {
 	private List<User> userList;
 	private int userID;
 	private boolean isPasswordChangeNecessary;
-	private UserDao userService;
+	private UserService userService;
 
 	
 	@PostConstruct
 	public void initialize() {
-		currentUser = (User)JsfUtils.getBeanAttribute("currentUser", "loginView", User.class);
-		userService = (UserDaoImpl)JsfUtils.getBeanAttribute("userService", "loginView", UserDaoImpl.class);
+		currentUser = JsfUtils.getCurrentUserBeanAttribute();
+		userService = JsfUtils.getUserServiceBeanAttribute();
 
 		if(currentUser.isAdmin()) {
 			isAdmin = "true";

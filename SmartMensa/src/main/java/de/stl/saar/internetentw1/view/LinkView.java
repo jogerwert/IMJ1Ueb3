@@ -20,12 +20,13 @@ public class LinkView {
 	private String isAdmin;
 	private User currentUser;	
 	private String selectedUserName;
+
 	
 	
 	@PostConstruct
 	public void initialize() {
-		currentUser = (User)JsfUtils.getBeanAttribute("currentUser", "loginView", User.class);
-		selectedUserName = currentUser.getUsername();
+		currentUser = JsfUtils.getCurrentUserBeanAttribute();
+		
 		if(currentUser.isAdmin()) {
 			isAdmin = "true";
 		}else {
@@ -64,4 +65,7 @@ public class LinkView {
 	public void setSelectedUserName(String selectedUserName) {
 		this.selectedUserName = selectedUserName;
 	}
+
+
+
 }

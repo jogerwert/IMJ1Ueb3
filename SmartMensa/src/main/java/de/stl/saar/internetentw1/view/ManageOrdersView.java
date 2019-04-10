@@ -18,22 +18,24 @@ import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.model.Dish;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
+import de.stl.saar.internetentw1.service.interfaces.DishService;
+import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 
 @ManagedBean
 @ViewScoped
 public class ManageOrdersView {
 	private User currentUser;
-	private UserDao userService;
-	private DishDao dishService;
+	private UserService userService;
+	private DishService dishService;
 	private DataModel<Dish> dishDataTable;
 	private List<Dish> dishList;
 	
 	@PostConstruct
 	public void initialize() {
-		userService = (UserDaoImpl)JsfUtils.getBeanAttribute("userService", "loginView", UserDaoImpl.class);
-		currentUser = (User)JsfUtils.getBeanAttribute("currentUser", "linkView", User.class);
-		dishService = (DishDaoImpl)JsfUtils.getBeanAttribute("dishService", "loginView", DishDaoImpl.class);
+		currentUser = JsfUtils.getCurrentUserBeanAttribute();
+		userService = JsfUtils.getUserServiceBeanAttribute();
+		dishService = JsfUtils.getDishServiceBeanAttribute();
 		
 		
 		dishList = dishService.findAllDishes();
@@ -74,21 +76,23 @@ public class ManageOrdersView {
 		this.dishList = dishList;
 	}
 
-	public UserDao getUserService() {
+	public UserService getUserService() {
 		return userService;
 	}
 
-	public void setUserService(UserDao userService) {
+	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 
-	public DishDao getDishService() {
+	public DishService getDishService() {
 		return dishService;
 	}
 
-	public void setDishService(DishDao dishService) {
+	public void setDishService(DishService dishService) {
 		this.dishService = dishService;
 	}
+
+
 	
 
 

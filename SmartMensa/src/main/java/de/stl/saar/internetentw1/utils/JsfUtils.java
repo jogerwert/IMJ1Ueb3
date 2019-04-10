@@ -10,8 +10,15 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import de.stl.saar.internetentw1.model.User;
+import de.stl.saar.internetentw1.service.classes.UserServiceImpl;
+import de.stl.saar.internetentw1.service.interfaces.DishService;
+import de.stl.saar.internetentw1.service.interfaces.UserService;
+import de.stl.saar.internetentw1.service.classes.DishServiceImpl;
+
 public class JsfUtils {
 	private static final String PARAM_USER_ID = "userId";
+	private static final String LOGINVIEW_SESSION_BEAN = "loginView";
 	
 	public static long getUserIdParameter() {
 		final String userIdAsString = getParameterByName(PARAM_USER_ID);
@@ -86,6 +93,35 @@ public class JsfUtils {
 
 	public static void setLocale(Locale locale) {
 		getFacesContext().getViewRoot().setLocale(locale);
+	}
+	
+	/**
+	 * Gibt den Aktuell eingeloggten User aus der Session-Scoped ManagedBean "LoginView" zurueck
+	 * @return aktuell eingeloggter User
+	 */
+	public static User getCurrentUserBeanAttribute() {
+		User currentUser = (User)JsfUtils.getBeanAttribute("currentUser", LOGINVIEW_SESSION_BEAN, User.class);
+		return currentUser;
+	}
+	
+	/**
+	 * Gibt das aktuell verwendete UserService-Objekt aus der Session-Scoped ManagedBean "LoginView" zurueck.
+	 * Dieses Objekt sorgt dafür, dass Änderungen in der User-Datenbank auch über die gesamte Session hinweg sichtbar sind.
+	 * @return aktuell verwendeter UserService
+	 */
+	public static UserService getUserServiceBeanAttribute() {
+		UserService userService = (UserServiceImpl)JsfUtils.getBeanAttribute("userService", LOGINVIEW_SESSION_BEAN, UserServiceImpl.class);
+		return userService;
+	}
+	
+	/**
+	 * Gibt das aktuell verwendete DishService-Objekt aus der Session-Scoped ManagedBean "LoginView" zurueck.
+	 * Dieses Objekt sorgt dafür, dass Änderungen in der Dish-Datenbank auch über die gesamte Session hinweg sichtbar sind.
+	 * @return aktuell verwendeter DishService
+	 */
+	public static DishService getDishServiceBeanAttribute() {
+		DishService dishService = (DishServiceImpl)JsfUtils.getBeanAttribute("dishService", LOGINVIEW_SESSION_BEAN, DishServiceImpl.class);
+		return dishService;
 	}
 }
 

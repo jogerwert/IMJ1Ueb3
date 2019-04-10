@@ -15,6 +15,7 @@ import de.stl.saar.internetentw1.dao.classes.UserDaoImpl;
 import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
+import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 
 @ManagedBean
@@ -31,12 +32,12 @@ public class ManageUsersView {
 	private DataModel<User> userDataTable;
 	private List<User> userList;
 	private int userID;
-	private UserDao userService;
+	private UserService userService;
 	
 	@PostConstruct
 	public void initialize() {
-		userService = (UserDaoImpl)JsfUtils.getBeanAttribute("userService", "loginView", UserDaoImpl.class);
-		currentUser = (User)JsfUtils.getBeanAttribute("currentUser", "linkView", User.class);
+		currentUser = JsfUtils.getCurrentUserBeanAttribute();
+		userService = JsfUtils.getUserServiceBeanAttribute();
 		
 		if(currentUser.isAdmin()) {
 			isAdmin = "true";
@@ -63,7 +64,7 @@ public class ManageUsersView {
 		User selectedUser = this.userList.get(selectedUserIndex);
 		this.userList.remove(selectedUserIndex);
 		
-		userService.removeUser(selectedUser.getUserId());
+		userService.removeUserById(selectedUser.getUserId());
 	}
 	
 	

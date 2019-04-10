@@ -18,6 +18,7 @@ import de.stl.saar.internetentw1.dao.classes.*;
 import de.stl.saar.internetentw1.dao.interfaces.*;
 import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.*;
+import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 import de.stl.saar.internetentw1.utils.StringUtils;
 import de.stl.saar.internetentw1.constants.*;
@@ -32,14 +33,14 @@ import de.stl.saar.internetentw1.constants.*;
 @ManagedBean
 @ViewScoped
 public class ChangePasswordView {
-	private UserDao userService;
+	private UserService userService;
 	private String password;
 	private User currentUser;	
 	
 	@PostConstruct
 	public void initializeBean() {
-		currentUser = (User)JsfUtils.getBeanAttribute("currentUser", "loginView", User.class);
-		userService = (UserDaoImpl)JsfUtils.getBeanAttribute("userService", "loginView", UserDaoImpl.class);
+		currentUser = JsfUtils.getCurrentUserBeanAttribute();
+		userService = JsfUtils.getUserServiceBeanAttribute();
 		password = currentUser.getPassword();
 	}
 
@@ -66,13 +67,15 @@ public class ChangePasswordView {
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
-	
-	public UserDao getUserService() {
+
+	public UserService getUserService() {
 		return userService;
 	}
 
-	public void setUserService(UserDao userService) {
+	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
+
 	
 }

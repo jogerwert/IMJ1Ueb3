@@ -20,6 +20,8 @@ import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
+import de.stl.saar.internetentw1.service.classes.UserServiceImpl;
+import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 import de.stl.saar.internetentw1.utils.RandomUtils;
 
@@ -35,13 +37,13 @@ public class ChangeExistingUserView {
 	private List<User> userList;
 	private int userID;
 	private boolean isPasswordChangeNecessary;
-	private UserDao userService;
+	private UserService userService;
 
 	
 	@PostConstruct
 	public void initialize() {
-		currentUser = (User)JsfUtils.getBeanAttribute("currentUser", "loginView", User.class);
-		userService = (UserDaoImpl)JsfUtils.getBeanAttribute("userService", "loginView", UserDaoImpl.class);
+		currentUser = JsfUtils.getCurrentUserBeanAttribute();
+		userService = JsfUtils.getUserServiceBeanAttribute();
 
 		String selectedUsernameParam = JsfUtils.getParameterByName("selectedUserName");
 		userToChange = userService.findUserByName(selectedUsernameParam);
@@ -75,9 +77,8 @@ public class ChangeExistingUserView {
 
 	public void validateUsername(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException {
 		String tmpUsername = (String) value;
-		User tmpUser = userService.findUserByName(tmpUsername);
 		
-		if(tmpUser != null) {
+		if(userService.doesUsernameExist(tmpUsername)) {
 			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getErrorUsernameAlreadyExistsString()));		
 		}
 	}
@@ -121,14 +122,6 @@ public class ChangeExistingUserView {
 	public void setRole(String role) {
 		this.role = role;
 	}
-//
-//	public String getIsNotAdmin() {
-//		return isNotAdmin;
-//	}
-//
-//	public void setIsNotAdmin(String isNotAdmin) {
-//		this.isNotAdmin = isNotAdmin;
-//	}
 
 	public int getUserID() {
 		return userID;

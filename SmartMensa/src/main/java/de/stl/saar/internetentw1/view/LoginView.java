@@ -17,6 +17,10 @@ import de.stl.saar.internetentw1.dao.classes.*;
 import de.stl.saar.internetentw1.dao.interfaces.*;
 import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.*;
+import de.stl.saar.internetentw1.service.classes.DishServiceImpl;
+import de.stl.saar.internetentw1.service.classes.UserServiceImpl;
+import de.stl.saar.internetentw1.service.interfaces.DishService;
+import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.StringUtils;
 import de.stl.saar.internetentw1.constants.*;
 
@@ -30,8 +34,8 @@ import de.stl.saar.internetentw1.constants.*;
 @ManagedBean
 @SessionScoped
 public class LoginView {
-	private UserDao userService;
-	private DishDao dishService;
+	private UserService userService;
+	private DishService dishService;
 	private String username;
 	private String password;
 	private User currentUser;	
@@ -39,8 +43,8 @@ public class LoginView {
 	
 	@PostConstruct
 	public void initializeBean() {
-		userService = new UserDaoImpl();
-		dishService = new DishDaoImpl();
+		userService = new UserServiceImpl();
+		dishService = new DishServiceImpl();
 	}
 	
 	public void initialize(ComponentSystemEvent event) {
@@ -86,11 +90,7 @@ public class LoginView {
 		}
 		return null;
 	}
-	
-//	public void logOut(ActionEvent actionEvent) {
-//		currentUser = null;
-//	}
-	
+
 	public String logout() {
 		currentUser = null;
 		
@@ -123,6 +123,22 @@ public class LoginView {
 	
 	
 	
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public DishService getDishService() {
+		return dishService;
+	}
+
+	public void setDishService(DishService dishService) {
+		this.dishService = dishService;
+	}
+
 	public String getSelectedUserName() {
 		return selectedUserName;
 	}
@@ -132,40 +148,10 @@ public class LoginView {
 	}
 
 	
-	public UserDao getUserService() {
-		return userService;
-	}
-
-	public void setUserService(UserDao userService) {
-		this.userService = userService;
-	}
-
-	public DishDao getDishService() {
-		return dishService;
-	}
-
-	public void setDishService(DishDao dishService) {
-		this.dishService = dishService;
-	}
-
-	public String getUrlIngameLinks() {
-		if (isUserLoggedIn()) {
-			return UrlConstants.USER_LINKS;
-		} else {
-			return UrlConstants.ADMIN_LINKS;
-		}
-	}
-	
 	public void validatePassword(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException {
 		String tmpPassword = (String) value;
 		User tmpUser = null;
-//		
-//		for (User u : userList) {
-//			if(StringUtils.areStringsEqual(u.getPassword(), tmpPassword)) {
-//				tmpUser = u;
-//			}
-//		}
-//		
+
 		List<User> userList = this.userService.findAllUsers();
 		for(User u : userList) {
 			if(u.getUsername().equals(this.username)) {
@@ -176,16 +162,15 @@ public class LoginView {
 		}
 		
 		if(tmpUser == null) {
-			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getAuthenticationErrorPasswordString()));	
+			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getAuthenticationErrorString()));	
 		}
 		
 	}
 	
 	public void validateUsername(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException {
 		String tmpUsername = (String) value;
-		User tmpUser = userService.findUserByName(tmpUsername);
 		
-		if(tmpUser == null) {
+		if(!userService.doesUsernameExist(tmpUsername)) {
 			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getAuthenticationErrorUsernameString()));		
 		}
 	}
