@@ -18,7 +18,7 @@
 	<ui:define name="body">
 		<h1>#{labels.menu}</h1>
 		<h:form>			
-			<h:dataTable var="varCurrentDish" value="#{manageOrdersView.dishDataTable}">
+			<h:dataTable var="varCurrentDish" value="#{manageOrdersView.dishDataTable}" >
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{labels.labelNumber}"/>
@@ -38,7 +38,7 @@
 					<h:outputText value="#{varCurrentDish.price}"/>
 				</h:column>
 				<h:column>
-					<h:graphicImage width="40%" library="images" name="#{varCurrentDish.imageName}.jpg"/>
+					<h:graphicImage width="35%" library="images" name="#{varCurrentDish.imageName}.jpg"/>
 				</h:column>
 				<h:column>
 					<h:commandButton value="#{labels.buttonAddToCart}" />
