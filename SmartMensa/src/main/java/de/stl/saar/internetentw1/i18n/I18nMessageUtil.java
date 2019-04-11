@@ -20,6 +20,11 @@ public class I18nMessageUtil {
 	
 	private static final String USERNAME_ALREADY_EXISTS_ERROR= "userNameAlreadyExistsError";
 	
+	private static final String DISH_ADDED_SUMMARY= "dishAddedSummary";
+	private static final String DISH_ADDED_DETAIL= "dishAddedDetail";
+	private static final String DISH_CHANGED_SUMMARY= "dishChangedSummary";
+	private static final String DISH_CHANGED_DETAIL= "dishChangedDetail";
+	
 	private static final String LINK_MANAGE_DISHES= "manageDishes";
 	private static final String LINK_MANAGE_USERS= "manageUsers";
 	
@@ -57,6 +62,22 @@ public class I18nMessageUtil {
 	
 	public static String getErrorUsernameAlreadyExistsString() {
 		return messagesResourceBundle.getString(USERNAME_ALREADY_EXISTS_ERROR);
+	}
+	
+	public static final String getDishAddedSummary() {
+		return messagesResourceBundle.getString(DISH_ADDED_SUMMARY);
+	}
+	
+	public static final String getDishAddedDetail() {
+		return messagesResourceBundle.getString(DISH_ADDED_DETAIL);
+	}
+	
+	public static final String getDishChangedSummary() {
+		return messagesResourceBundle.getString(DISH_CHANGED_SUMMARY);
+	}
+	
+	public static final String getDishChangedDetail() {
+		return messagesResourceBundle.getString(DISH_CHANGED_DETAIL);
 	}
 
 	

@@ -7,6 +7,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.Category;
 import de.stl.saar.internetentw1.model.Dish;
 import de.stl.saar.internetentw1.service.classes.DishServiceImpl;
@@ -26,17 +27,64 @@ public class NewAndChangeDishView {
 	
 	@PostConstruct
 	public void init() {
-		dishService = new DishServiceImpl();
+		this.dishService = new DishServiceImpl();
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		dishId = facesContext.getExternalContext().getRequestParameterMap().get("dishId");
+		this.dishId = facesContext.getExternalContext().getRequestParameterMap().get("dishId");
 		
-		if(dishId == null) {
+		if(this.dishId == null) {
 			this.newDish = true;
 		}else {
 			this.newDish = false;
 			this.dish = dishService.findDish(Integer.parseInt(dishId));
+			this.dishName = dish.getDishName();
+			this.dishPrice = Double.toString(dish.getPrice());
+			this.dishCategory = dish.getCategory().getCategoryName();
 			
 		}
+	}
+	
+	public void createAndChangeDish(ActionEvent event) {
+		if(newDish) {
+			createDish();
+		}else {
+			changeDish();
+		}
+	}
+	
+	public void createDish() {
+		String name = dishName;
+		Double price = Double.parseDouble(dishPrice);
+		Category category = Category.getCategoryByName(dishCategory);
+		String imageName = "noImageAvailable";
+		
+		Dish newDish = new Dish(name, price, category, imageName);
+		dishService.addDish(newDish);
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, 
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+						I18nMessageUtil.getDishAddedSummary(),
+						I18nMessageUtil.getDishAddedDetail()
+						)
+				);
+		
+	}
+	
+	public void changeDish() {
+		dish.setDishName(dishName);
+		dish.setPrice(Double.parseDouble(dishPrice));;
+		dish.setCategory(Category.getCategoryByName(dishCategory));
+		
+		dishService.removeDishById(dish.getDishId());
+		dishService.addDish(dish);
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, 
+				new FacesMessage(FacesMessage.SEVERITY_INFO, 
+						I18nMessageUtil.getDishChangedSummary(), 
+						I18nMessageUtil.getDishChangedDetail()
+						)
+				);
 	}
 
 	public String getDishId() {

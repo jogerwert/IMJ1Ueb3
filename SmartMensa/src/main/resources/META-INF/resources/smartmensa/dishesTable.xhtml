@@ -14,8 +14,8 @@
 	<f:view>
 		<ui:component>
 			<h:dataTable var="dish"
-						 value="#{manageDishes.dishesList}"
-						 id=tblDishes>
+						 value="#{manageDishesView.dishesList}"
+						 id="tblDishes">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{labels.labelNumber}" />
@@ -36,14 +36,15 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{labels.labelCategory" />
+						<h:outputText value="#{labels.labelCategory}" />
 					</f:facet>
+					<h:outputText value="#{dish.category.categoryName}" />
 				</h:column>
 				<h:column>
 					<h:commandButton value="#{labels.buttonChangeDish}" action="newAndChangeDish">
 						<f:param name="dishId" value="#{dish.dishId}" />
 					</h:commandButton>
-					<h:commandButton value="#{labels.buttonRemoveDish}" actionListener="#{manageDishes.removeDish}" />
+					<h:commandButton value="#{labels.buttonRemoveDish}" actionListener="#{manageDishesView.removeDish}" />
 				</h:column>
 			</h:dataTable>
 		</ui:component>

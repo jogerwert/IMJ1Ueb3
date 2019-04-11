@@ -25,14 +25,22 @@
 				<h:outputLabel value="#{labels.labelPrice}" />
 				<h:inputText value="#{newAndChangeDishView.dishPrice}" />
 				<h:outputLabel value="#{labels.labelCategory}" />
-				<h:inputText value="#{newAndChangeDishView.dishCategory}" />
+				<h:selectOneListbox
+						id="listboxCategory"
+						value="newAndChangeDishView.dishCategory">
+					<f:selectItem itemLabel="#{labels.labelSoup}" itemValue="Suppe"/>
+					<f:selectItem itemLabel="#{labels.labelDessert}" itemValue="Nachtisch"/>
+					<f:selectItem itemLabel="#{labels.labelFruit}" itemValue="Obst"/>
+					<f:selectItem itemLabel="#{labels.labelSalad}" itemValue="Salat"/>
+					<f:selectItem itemLabel="#{labels.labelMainDish}" itemValue="Hauptgericht"/>
+				</h:selectOneListbox>
 			</h:panelGrid>
 			<h:commandButton value="#{labels.buttonSave}"
 							 actionListener="#{newAndChangeDishView.createAndChangeDish}"
-							 action="manageDishesView" />
+							 action="manageDishes" />
 			<h:commandButton value="#{labels.buttonCancel}"
 							 immediate="true"
-							 action="manageDishesView" />
+							 action="manageDishes" />
 		</h:form>
 		</ui:define>
 	</ui:composition>
