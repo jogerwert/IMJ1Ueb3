@@ -25,9 +25,7 @@
 				<h:outputLabel value="#{labels.labelPrice}" />
 				<h:inputText value="#{newAndChangeDishView.dishPrice}" />
 				<h:outputLabel value="#{labels.labelCategory}" />
-				<h:selectOneListbox
-						id="listboxCategory"
-						value="newAndChangeDishView.dishCategory">
+				<h:selectOneListbox value="#{newAndChangeDishView.dishCategory}">
 					<f:selectItem itemLabel="#{labels.labelSoup}" itemValue="Suppe"/>
 					<f:selectItem itemLabel="#{labels.labelDessert}" itemValue="Nachtisch"/>
 					<f:selectItem itemLabel="#{labels.labelFruit}" itemValue="Obst"/>
