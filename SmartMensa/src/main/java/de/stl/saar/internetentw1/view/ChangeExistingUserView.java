@@ -20,7 +20,9 @@ import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
+import de.stl.saar.internetentw1.service.classes.RoleServiceImpl;
 import de.stl.saar.internetentw1.service.classes.UserServiceImpl;
+import de.stl.saar.internetentw1.service.interfaces.RoleService;
 import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 import de.stl.saar.internetentw1.utils.RandomUtils;
@@ -38,12 +40,14 @@ public class ChangeExistingUserView {
 	private int userID;
 	private boolean isPasswordChangeNecessary;
 	private UserService userService;
+	private RoleService roleService;
 
 	
 	@PostConstruct
 	public void initialize() {
 		currentUser = JsfUtils.getCurrentUserBeanAttribute();
 		userService = JsfUtils.getUserServiceBeanAttribute();
+		roleService = new RoleServiceImpl();
 
 		String selectedUsernameParam = JsfUtils.getParameterByName("selectedUserName");
 		userToChange = userService.findUserByName(selectedUsernameParam);
@@ -54,7 +58,7 @@ public class ChangeExistingUserView {
 		role = userToChange.getRole().toString();
 		userID = userToChange.getUserId();
 		
-		roleList = new RoleDaoImpl().findAllRoles();
+		roleList = roleService.findAllRoles();
 		
 		userList = userService.findAllUsers();
 	}
@@ -62,7 +66,7 @@ public class ChangeExistingUserView {
 	public void saveChangesToSelectedUser(ActionEvent event) {
 		userToChange.setUsername(username);
 		userToChange.setPassword(password);
-		userToChange.setRole(new RoleDaoImpl().findRoleByName(role));
+		userToChange.setRole(roleService.findRoleByName(role));
 		userToChange.setIsPasswordChangeNecessary(isPasswordChangeNecessary);
 			
 	}

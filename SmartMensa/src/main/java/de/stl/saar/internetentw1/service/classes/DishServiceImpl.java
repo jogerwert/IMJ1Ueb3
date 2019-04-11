@@ -12,7 +12,7 @@ public class DishServiceImpl implements DishService{
 	private DishDao dishDao;
 	
 	public DishServiceImpl() {
-		this.dishDao = new DishDaoImpl();
+		this.dishDao = DishDaoImpl.getInstance();
 	}
 	
 	@Override

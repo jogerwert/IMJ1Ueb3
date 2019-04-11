@@ -14,20 +14,20 @@ import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 public class DaoConfiguration {
 	@Bean(name = "dishDao")
 	public DishDao createDishDao() {
-		final DishDao dishDao = new DishDaoImpl();
+		final DishDao dishDao = DishDaoImpl.getInstance();
 		return dishDao;
 	}
 	
 	@Bean(name = "userDao")
 	public UserDao createUserDao() {
-		final UserDao userDao = new UserDaoImpl();
+		final UserDao userDao = UserDaoImpl.getInstance();
 		userDao.setRoleDao(createRoleDao());
 		return userDao;
 	}
 	
 	@Bean(name = "roleDao")
 	public RoleDao createRoleDao() {
-		final RoleDao roleDao = new RoleDaoImpl();
+		final RoleDao roleDao = RoleDaoImpl.getInstance();
 		return roleDao;
 	}
 }

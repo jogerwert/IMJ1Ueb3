@@ -12,7 +12,7 @@ public class RoleServiceImpl implements RoleService{
 	private RoleDao roleDao;
 	
 	public RoleServiceImpl() {
-		this.roleDao = new RoleDaoImpl();
+		this.roleDao = RoleDaoImpl.getInstance();
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class RoleServiceImpl implements RoleService{
 
 	@Override
 	public Role findRoleByName(String roleName) {
-		return this.findRoleByName(roleName);
+		return this.roleDao.findRoleByName(roleName);
 	}
 	
 	

@@ -22,12 +22,15 @@ import de.stl.saar.internetentw1.utils.RandomUtils;
  *
  */
 public class UserDaoImpl implements UserDao {
+	
+	private static UserDaoImpl INSTANCE;
+	
 	private Map<Integer, User> userTable;
 	private RoleDao roleDao;
 	
-	public UserDaoImpl() {
+	private UserDaoImpl() {
 		userTable = new HashMap<>();
-		roleDao = new RoleDaoImpl();
+		roleDao = RoleDaoImpl.getInstance();
 		final Role adminRole = roleDao.findRoleByName("admin");
 		final Role userRole = roleDao.findRoleByName("user");
 		final User user1 = new User(1, "colbertz", "1234", adminRole);
@@ -36,6 +39,14 @@ public class UserDaoImpl implements UserDao {
 		addUser(user1);
 		addUser(user2);
 		addUser(user3);
+	}
+	
+	public static UserDaoImpl getInstance() {
+		if(INSTANCE == null) {
+			INSTANCE = new UserDaoImpl();
+		}
+		
+		return INSTANCE;
 	}
 	
 	/**

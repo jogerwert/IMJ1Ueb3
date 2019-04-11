@@ -15,6 +15,8 @@ import de.stl.saar.internetentw1.dao.classes.UserDaoImpl;
 import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
+import de.stl.saar.internetentw1.service.classes.RoleServiceImpl;
+import de.stl.saar.internetentw1.service.interfaces.RoleService;
 import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 
@@ -33,11 +35,13 @@ public class ManageUsersView {
 	private List<User> userList;
 	private int userID;
 	private UserService userService;
+	private RoleService roleService;
 	
 	@PostConstruct
 	public void initialize() {
 		currentUser = JsfUtils.getCurrentUserBeanAttribute();
 		userService = JsfUtils.getUserServiceBeanAttribute();
+		roleService = new RoleServiceImpl();
 		
 		if(currentUser.isAdmin()) {
 			isAdmin = "true";
@@ -51,7 +55,7 @@ public class ManageUsersView {
 		role = currentUser.getRole().toString();
 		userID = currentUser.getUserId();
 		
-		roleList = new RoleDaoImpl().findAllRoles();
+		roleList = roleService.findAllRoles();
 		
 		userList = userService.findAllUsers();
 		userDataTable = new ListDataModel<User>();						

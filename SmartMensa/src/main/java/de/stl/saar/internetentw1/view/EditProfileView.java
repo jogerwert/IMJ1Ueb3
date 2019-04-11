@@ -20,6 +20,8 @@ import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
+import de.stl.saar.internetentw1.service.classes.RoleServiceImpl;
+import de.stl.saar.internetentw1.service.interfaces.RoleService;
 import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 import de.stl.saar.internetentw1.utils.RandomUtils;
@@ -38,12 +40,14 @@ public class EditProfileView {
 	private int userID;
 	private boolean isPasswordChangeNecessary;
 	private UserService userService;
+	private RoleService roleService;
 
 	
 	@PostConstruct
 	public void initialize() {
 		currentUser = JsfUtils.getCurrentUserBeanAttribute();
 		userService = JsfUtils.getUserServiceBeanAttribute();
+		roleService = new RoleServiceImpl();
 
 		if(currentUser.isAdmin()) {
 			isAdmin = "true";
@@ -58,7 +62,7 @@ public class EditProfileView {
 		role = currentUser.getRole().toString();
 		userID = currentUser.getUserId();
 		
-		roleList = new RoleDaoImpl().findAllRoles();
+		roleList = roleService.findAllRoles();
 		
 		userList = userService.findAllUsers();
 	}
@@ -67,7 +71,7 @@ public class EditProfileView {
 		if(currentUser.isAdmin()) {
 			currentUser.setUsername(username);
 			currentUser.setPassword(password);
-			currentUser.setRole(new RoleDaoImpl().findRoleByName(role));
+			currentUser.setRole(roleService.findRoleByName(role));
 			currentUser.setIsPasswordChangeNecessary(isPasswordChangeNecessary);
 		}else {
 			currentUser.setUsername(username);
@@ -78,7 +82,7 @@ public class EditProfileView {
 	
 	public void createNewUser(ActionEvent event) {
 		if(currentUser.isAdmin()) {
-			Role selectedRole = new RoleDaoImpl().findRoleByName(role);
+			Role selectedRole = roleService.findRoleByName(role);
 			User newUser = new User(0, username, password, selectedRole );
 			newUser.setIsPasswordChangeNecessary(isPasswordChangeNecessary);
 			userService.addUser(newUser);

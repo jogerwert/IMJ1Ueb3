@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 	
 	public UserServiceImpl() {
-		this.userDao = new UserDaoImpl();
+		this.userDao = UserDaoImpl.getInstance();
 	}
 	
 	@Override

@@ -19,14 +19,25 @@ import de.stl.saar.internetentw1.utils.StringUtils;
  *
  */
 public class RoleDaoImpl implements RoleDao {
+	
+	private static RoleDaoImpl INSTANCE;
+	
 	private Map<Integer, Role> roleTable;
 	
-	public RoleDaoImpl() {
+	private RoleDaoImpl() {
 		roleTable = new HashMap<>();
 		final Role role1 = new Role(1, "admin");
 		final Role role2 = new Role(2, "user");
 		addRole(role1);
 		addRole(role2);
+	}
+	
+	public static RoleDaoImpl getInstance() {
+		if(INSTANCE == null) {
+			INSTANCE = new RoleDaoImpl();
+		}
+		
+		return INSTANCE;
 	}
 
 	@Override

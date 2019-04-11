@@ -19,9 +19,12 @@ import de.stl.saar.internetentw1.utils.RandomUtils;
  *
  */
 public class DishDaoImpl implements DishDao {
+	
+	private static DishDaoImpl INSTANCE;
+	
 	private Map<Integer, Dish> dishTable;
 	
-	public DishDaoImpl() {
+	private DishDaoImpl() {
 		dishTable = new HashMap<>();
 		final Dish dish1 = new Dish("Baumkuchen", 2.0, Category.DESSERT, "baumkuchen");
 		final Dish dish2 = new Dish("Creme Brulee", 2.5, Category.DESSERT, "cremeBrulee");
@@ -43,6 +46,14 @@ public class DishDaoImpl implements DishDao {
 		addDish(dish8);
 		addDish(dish9);
 		addDish(dish10);
+	}
+	
+	public static DishDaoImpl getInstance() {
+		if(INSTANCE == null) {
+			INSTANCE = new DishDaoImpl();
+		}
+		
+		return INSTANCE;
 	}
 
 	@Override
