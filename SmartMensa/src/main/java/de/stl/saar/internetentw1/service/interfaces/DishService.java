@@ -11,4 +11,6 @@ public interface DishService {
 	public void removeDishById(final int dishId);
 	
 	public List<Dish> findAllDishes();
+	
+	public Dish findDish(final int dishId);
 }

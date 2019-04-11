@@ -104,4 +104,13 @@ public class DishDaoImpl implements DishDao {
 		final List<Dish> dishes = new ArrayList<>(dishCollection);
 		return dishes;
 	}
+	
+	@Override
+	public Dish findDish(final int dishId) {
+		Dish dish = null;
+		
+		dish = dishTable.get(dishId);
+		
+		return dish;
+	}
 }

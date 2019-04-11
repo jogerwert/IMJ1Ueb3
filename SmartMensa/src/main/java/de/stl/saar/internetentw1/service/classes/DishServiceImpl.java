@@ -31,5 +31,10 @@ public class DishServiceImpl implements DishService{
 	public List<Dish> findAllDishes() {
 		return this.dishDao.findAllDishes();
 	}
+	
+	@Override
+	public Dish findDish(final int dishId) {
+		return  this.dishDao.findDish(dishId);
+	}
 
 }

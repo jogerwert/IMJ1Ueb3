@@ -24,5 +24,12 @@ public interface DishDao {
 	 * falls die Tabelle leer ist. 
 	 */
 	List<Dish> findAllDishes();
+	
+	/**
+	 * Ermittelt eine spezifisches Gericht in der Datenbank.
+	 * @param dishId Die Id des gesuchten Gerichtes.
+	 * @return Das gesuchte Gericht.
+	 */
+	Dish findDish(int dishId);
 
 }
