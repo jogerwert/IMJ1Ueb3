@@ -14,7 +14,6 @@
 	</ui:define>
 	
 	
-	
 	<ui:define name="body">
 		<h1>#{labels.menu}</h1>
 		<h:form>			
@@ -35,21 +34,70 @@
 					<f:facet name="header">
 						<h:outputText value="#{labels.labelPrice}"/>
 					</f:facet>
-					<h:outputText value="#{varCurrentDish.price}"/>
+					<h:outputText value="#{varCurrentDish.price}">
+						<f:convertNumber locale="#{i18nBean.localeCode}" type="currency" currencySymbol="#{labels.currencySymbol}"/>
+					</h:outputText>
 				</h:column>
 				<h:column>
-					<h:graphicImage width="35%" library="images" name="#{varCurrentDish.imageName}.jpg"/>
+					<h:graphicImage width="28%" library="images" name="#{varCurrentDish.imageName}.jpg"/>
 				</h:column>
 				<h:column>
-					<h:commandButton value="#{labels.buttonAddToCart}" />
+					<h:commandButton value="#{labels.buttonAddToCart}" actionListener="#{manageOrdersView.addDishToCart}">
+							<f:ajax render="@form"/>
+					</h:commandButton>
 				</h:column>
 			</h:dataTable>
 			
+			<h:panelGroup rendered="#{manageOrdersView.hasCartContent}">
+				<br/>
+				<br/>
+				<h1>#{labels.shoppingCart}</h1>
+				<h:dataTable var="varCartCurrentDish" value="#{manageOrdersView.cartDataTable}" >
+					<h:column>
+						<h:outputText value="#{varCartCurrentDish.dishName}"/>
+					</h:column>
+					<h:column>				
+						<h:outputText value="#{varCartCurrentDish.price}">
+							<f:convertNumber locale="#{i18nBean.localeCode}" type="currency" currencySymbol="#{labels.currencySymbol}"/>
+						</h:outputText>
+					</h:column>		
+					<h:column>
+						<h:commandButton value="#{labels.buttonDelete}" actionListener="#{manageOrdersView.removeDishFromCart}">
+							<f:ajax render="@form"/>
+						</h:commandButton>
+					</h:column>
+				</h:dataTable>
+				<h:commandButton value="#{labels.labelOrder}" actionListener="#{manageOrdersView.showDeliveryData}">
+					<f:ajax render="@form"/>
+				</h:commandButton>
+			</h:panelGroup>
+			
+	<h:panelGroup rendered="#{manageOrdersView.hasCartContent and manageOrdersView.orderBtnClicked}">	
+				<br/>
+				<br/>	
+				<h1>#{labels.deliveryData}</h1>	
+				<h:panelGrid columns="3">
+						<h:outputText value="#{labels.labelName}" /> 
+						<h:inputText value="#{manageOrdersView.name}" id="txtName"
+							 validatorMessage="#{msg.usernameLengthError}"
+							 requiredMessage="#{msg.usernameRequired}" 
+							 required="true">
+							<f:validateLength minimum="3" maximum="10" />
+						</h:inputText>
+						<h:message for="txtName" id="msgName"/>
+					
+						<h:outputText value="#{labels.labelRoomNumber}" /> 
+						<h:inputText id="txtRoomNumber"/>
+						<h:message for="txtRoomNumber"/>
+						
+						<h:commandButton value="#{labels.labelConfirmOrder}">
+						</h:commandButton>
+				</h:panelGrid>
+	</h:panelGroup>
+			<br/>
+			<br/>
+			<h:commandButton value="#{labels.buttonBack}" action="overview" immediate="true"/>
 
-
-
-
-			<h:commandButton value="#{labels.buttonBack}" action="overview" />
 		</h:form>
 	</ui:define>
 	</ui:composition>

@@ -16,12 +16,12 @@ public class I18nMessageUtil {
 	private static final String NOT_A_HTW_EMAIL = "notAHtwEmail";
 	private static final String PASSWORDS_NOT_EQUAL= "passwordsNotEqual";
 	private static final String AUTHENTICATION_ERROR= "authenticationError";
-	private static final String AUTHENTICATION_USERNAME_ERROR="authenticationErrorUsername";
+	private static final String AUTHENTICATION_USERNAME_ERROR= "authenticationErrorUsername";
 	
-	private static final String USERNAME_ALREADY_EXISTS_ERROR="userNameAlreadyExistsError";
+	private static final String USERNAME_ALREADY_EXISTS_ERROR= "userNameAlreadyExistsError";
 	
-	private static final String LINK_MANAGE_DISHES="manageDishes";
-	private static final String LINK_MANAGE_USERS="manageUsers";
+	private static final String LINK_MANAGE_DISHES= "manageDishes";
+	private static final String LINK_MANAGE_USERS= "manageUsers";
 	
 	
 	
@@ -58,7 +58,7 @@ public class I18nMessageUtil {
 	public static String getErrorUsernameAlreadyExistsString() {
 		return messagesResourceBundle.getString(USERNAME_ALREADY_EXISTS_ERROR);
 	}
-	
+
 	
 	//-------------------------Labels---------------------------------	  
 	public static final String getLinkManageDishesString() {
@@ -68,6 +68,7 @@ public class I18nMessageUtil {
 	public static final String getLinkManageUsersString() {
 		return labelsResourceBundle.getString(LINK_MANAGE_USERS);
 	}
+
 
 
 }
