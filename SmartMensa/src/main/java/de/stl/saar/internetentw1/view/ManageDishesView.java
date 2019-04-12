@@ -15,13 +15,27 @@ import de.stl.saar.internetentw1.service.classes.DishServiceImpl;
 import de.stl.saar.internetentw1.service.interfaces.DishService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 
+
+/**
+ * Controller der jsf-xhtmls manageDishes und dishesTable.
+ * Diese Klasse stellt den genannten xhtmls benoetigte Variablen und Methoden zur 
+ * Verfuegung.
+ * 
+ * @author Johannes Gerwert
+ * @version 12.04.19
+ */
 @ManagedBean
 @ViewScoped
 public class ManageDishesView {
+	
 	private DishService dishService;
 	private User currentUser;
 	private DataModel<Dish> dishesList;
 	
+	/**
+	 * Initialisierung der Attribute.
+	 * Diese Methode wird von JSF nach Erstellen des Objektes automatisch aufgerufen.
+	 */
 	@PostConstruct
 	public void initialize() {
 		dishService = new DishServiceImpl();
@@ -31,11 +45,18 @@ public class ManageDishesView {
 		dishesList.setWrappedData(dishes);
 	}
 	
+	/**
+	 * Wenn die entsprechende Schaltflaeche betaetigt wird, wird diese Methode aufgerufen.
+	 * Der Befehl zum Loeschen des ausgewaehlten Gerichtes wird an die Service-Schicht gesendet.
+	 * 
+	 * @param event Das Event, durch das diese Methode aufgerufen wurde. Kontextdaten werden
+	 * 				bereitgestellt.
+	 */
 	public void removeDish(ActionEvent event) {
 		Dish selectedDish = dishesList.getRowData();
 		dishService.removeDishById(selectedDish.getDishId());
 	}
-
+	
 	public DataModel<Dish> getDishesList() {
 		return dishesList;
 	}

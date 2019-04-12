@@ -18,6 +18,14 @@ import de.stl.saar.internetentw1.model.Dish;
 import de.stl.saar.internetentw1.service.classes.DishServiceImpl;
 import de.stl.saar.internetentw1.service.interfaces.DishService;
 
+/**
+ * Controller der jsf-xhtml newAndChangeDish.
+ * Diese Klasse stellt der genannten xhtml benoetigte Variablen und Methoden zur
+ * Verfuegung.
+ * 
+ * @author Johannes Gerwert
+ * @version 12.04.19
+ */
 @ManagedBean
 @ViewScoped
 public class NewAndChangeDishView {
@@ -30,12 +38,18 @@ public class NewAndChangeDishView {
 	private DishService dishService;
 	private boolean newDish;
 	
+	/**
+	 * Initialisierung der Attribute.
+	 * Diese Methode wird von JSF nach Erstellen des Objektes automatisch aufgerufen.
+	 */
 	@PostConstruct
 	public void init() {
 		this.dishService = new DishServiceImpl();
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		this.dishId = facesContext.getExternalContext().getRequestParameterMap().get("dishId");
 		
+		// hier wird geprueft, ob ein neues Gericht angelegt oder ein bereits
+		// existierendes Gericht geaendert wird.
 		if(this.dishId == null) {
 			this.newDish = true;
 		}else {
@@ -48,6 +62,13 @@ public class NewAndChangeDishView {
 		}
 	}
 	
+	/**
+	 * Wenn die entsprechende Schaltflaeche betaetigt wird, wird diese Methode aufgerufen.
+	 * Je nachdem ob ein neues Gericht angelegt oder ein bestehendes Gericht geaendert wird,
+	 * wird eine entsprechende Methode aufgerufen.
+	 * 
+	 * @param event Das event, durch das diese Methode aufgerufen wird. Wird nicht genutzt.
+	 */
 	public void createAndChangeDish(ActionEvent event) {
 		if(newDish) {
 			createDish();
@@ -56,6 +77,11 @@ public class NewAndChangeDishView {
 		}
 	}
 	
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein neues Gericht angelegt wird.
+	 * Ein neues Gericht-Objekt wird erstellt und es wird ein Befehl an die
+	 * Service-Schicht gesendet, dass dieses Gericht hinzugefuegt werden soll.
+	 */
 	public void createDish() {
 		String name = dishName;
 		Double price = Double.parseDouble(dishPrice);
@@ -75,6 +101,12 @@ public class NewAndChangeDishView {
 		
 	}
 	
+	/**
+	 * Diese Methode wird aufgerufen, wenn ein bereits bestehendes Gericht
+	 * geaendert wird.
+	 * Die Aenderungen werden durchgefuehrt und dann wird das Gericht der
+	 * Datenbank neu hinzugefuegt.
+	 */
 	public void changeDish() {
 		dish.setDishName(dishName);
 		dish.setPrice(Double.parseDouble(dishPrice));;
@@ -132,6 +164,14 @@ public class NewAndChangeDishView {
 		this.dish = dish;
 	}
 	
+	/**
+	 * Ueberprueft, ob der Name des Gerichtes leer ist.
+	 * 
+	 * @param facesContext Der facesContext der zu ueberpruefenden Komponente.
+	 * @param component Die zu ueberpruefende Komponente.
+	 * @param value Der Text, der in der Komponente eingegeben wurde.
+	 * @throws ValidatorException Die Nachricht, die angezeigt wird, falls der Name leer ist.
+	 */
 	public void validateDishName(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException{
 		String tempName = (String) value;
 		
@@ -142,6 +182,18 @@ public class NewAndChangeDishView {
 		}
 	}
 	
+	/**
+	 * Ueberprueft den Preis des Gerichts:
+	 * Zuerst wird geprueft, ob das Textfeld leer ist.
+	 * Dann wird per Regex geprueft, ob in dem Textfeld ein Double Wert steht.
+	 * Der String wird dann in einen Double umgewandelt und die Hoehe des Betrags wird
+	 * ueberprueft.
+	 * 
+	 * @param facesContext Der facesContext der zu ueberpruefenden Komponente.
+	 * @param component Die zu ueberpruefende Komponente.
+	 * @param value Der Text, der in der Komponente eingegeben wurde.
+	 * @throws ValidatorException Die Nachricht, die angezeigt wird, falls der Preis ungueltig ist.
+	 */
 	public void validateDishPrice(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException{
 		String tempPriceString = (String) value;
 		
@@ -150,7 +202,7 @@ public class NewAndChangeDishView {
 		}else if(tempPriceString.trim().isEmpty()) {
 			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getDishChangeErrorPriceEmpty()));
 		} else {
-			// Eine Zahl bestehend aus mindestens einer Zahl, ein Punkt und mindestens eine weitere Zahl 
+			// Eine Zahl bestehend aus mindestens einer Zahl, der ein Punkt und mindestens eine weitere Zahl 
 			// folgen koennen.
 			String regex = "\\d+(\\.{1}\\d+)?";
 			Pattern pattern = Pattern.compile(regex);
@@ -170,6 +222,14 @@ public class NewAndChangeDishView {
 		
 	}
 	
+	/**
+	 * Ueberprueft, ob eine Kategorie fuer das Gericht ausgewaehlt wurde.
+	 * 
+	 * @param facesContext Der facesContext der zu ueberpruefenden Komponente.
+	 * @param component Die zu ueberpruefende Komponente.
+	 * @param value Der Text, der in der Komponente eingegeben wurde.
+	 * @throws ValidatorException Die Nachricht, die angezeigt wird, falls keine Kategorie ausgewaehlt wurde.
+	 */
 	public void validateDishCategory(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException{
 		String tempCategoryString = (String) value;
 		
