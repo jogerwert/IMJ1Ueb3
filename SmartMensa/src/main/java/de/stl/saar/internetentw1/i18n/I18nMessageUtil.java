@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
  * the keys. This class contains the keys only for messages that are not error
  * messages.
  * @author Christopher Olbertz
+ * @author Johannes Gerwert
  *
  */
 public class I18nMessageUtil {

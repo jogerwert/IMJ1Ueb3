@@ -16,6 +16,7 @@ import de.stl.saar.internetentw1.utils.StringUtils;
  * einer Map, wobei der Primärschlüssel der Schlüssel der
  * Map ist. 
  * @author christopher
+ * @author Johannes Gerwert
  *
  */
 public class RoleDaoImpl implements RoleDao {
@@ -32,6 +33,12 @@ public class RoleDaoImpl implements RoleDao {
 		addRole(role2);
 	}
 	
+	/**
+	 * Implementiert das Singleton Entwurfsmuster.
+	 * Wird genutzt um eine Datenbank zu emulieren.
+	 * 
+	 * @return Das RoleDaoImpl Objekt.
+	 */
 	public static RoleDaoImpl getInstance() {
 		if(INSTANCE == null) {
 			INSTANCE = new RoleDaoImpl();

@@ -16,6 +16,7 @@ import de.stl.saar.internetentw1.utils.RandomUtils;
  * einer Map, wobei der Primärschlüssel der Schlüssel der
  * Map ist. 
  * @author christopher
+ * @author Johannes Gerwert
  *
  */
 public class DishDaoImpl implements DishDao {
@@ -48,6 +49,12 @@ public class DishDaoImpl implements DishDao {
 		addDish(dish10);
 	}
 	
+	/**
+	 * Implementiert das Singleton Entwurfsmuster.
+	 * Wird genutzt, um eine Datenbank zu emulieren.
+	 * 
+	 * @return Das DishDaoImpl Objekt.
+	 */
 	public static DishDaoImpl getInstance() {
 		if(INSTANCE == null) {
 			INSTANCE = new DishDaoImpl();

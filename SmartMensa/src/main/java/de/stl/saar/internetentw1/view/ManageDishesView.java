@@ -27,6 +27,7 @@ import de.stl.saar.internetentw1.utils.JsfUtils;
 @ManagedBean
 @ViewScoped
 public class ManageDishesView {
+	
 	private DishService dishService;
 	private User currentUser;
 	private DataModel<Dish> dishesList;

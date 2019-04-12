@@ -19,6 +19,7 @@ import de.stl.saar.internetentw1.utils.RandomUtils;
  * einer Map, wobei der Primärschlüssel der Schlüssel der
  * Map ist. 
  * @author christopher
+ * @author Johannes Gerwert
  *
  */
 public class UserDaoImpl implements UserDao {
@@ -41,30 +42,18 @@ public class UserDaoImpl implements UserDao {
 		addUser(user3);
 	}
 	
+	/**
+	 * Implementiert das Singleton Entwurfsmuster.
+	 * Wird genutzt, um eine Datenbank zu emulieren.
+	 * 
+	 * @return Das UserDaoImpl Objekt.
+	 */
 	public static UserDaoImpl getInstance() {
 		if(INSTANCE == null) {
 			INSTANCE = new UserDaoImpl();
 		}
 		
 		return INSTANCE;
-	}
-	
-	/**
-	 * Inhalte in Konstruktor dieser Klasse übernommen, da trotz "@PostConstruct" NullPointerExceptions
-	 * passiert sind
-	 */
-	@PostConstruct
-	public void initialize() {
-//		userTable = new HashMap<>();
-//		roleDao = new RoleDaoImpl();
-//		final Role adminRole = roleDao.findRoleByName("admin");
-//		final Role userRole = roleDao.findRoleByName("user");
-//		final User user1 = new User(1, "colbertz", "1234", adminRole);
-//		final User user2 = new User(2, "wpy", "qwertz", userRole);
-//		final User user3 = new User(3, "api", "5678", userRole);
-//		addUser(user1);
-//		addUser(user2);
-//		addUser(user3);
 	}
 
 	@Override
@@ -122,7 +111,6 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public List<User> findAllUsers() {
-		initialize();
 		final Collection<User> userCollection = userTable.values();
 		final List<User> users = new ArrayList<>(userCollection);
 		return users;
