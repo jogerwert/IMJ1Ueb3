@@ -67,6 +67,13 @@
 						</h:commandButton>
 					</h:column>
 				</h:dataTable>
+				<h:panelGrid columns="2">
+					<h:outputText style="font-weight:bold" value="#{labels.labelTotalPrice}" />
+					<h:outputText value="#{manageOrdersView.totalPrice}" >
+						<f:convertNumber locale="#{i18nBean.localeCode}" type="currency" currencySymbol="#{labels.currencySymbol}"/>
+					</h:outputText>
+				</h:panelGrid>
+				
 				<h:commandButton value="#{labels.labelOrder}" actionListener="#{manageOrdersView.showDeliveryData}">
 					<f:ajax render="@form"/>
 				</h:commandButton>
@@ -90,8 +97,9 @@
 						<h:inputText id="txtRoomNumber"/>
 						<h:message for="txtRoomNumber"/>
 						
-						<h:commandButton value="#{labels.labelConfirmOrder}">
+						<h:commandButton value="#{labels.labelConfirmOrder}" action="orderConfirmed">
 						</h:commandButton>
+						
 				</h:panelGrid>
 	</h:panelGroup>
 			<br/>

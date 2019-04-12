@@ -43,6 +43,7 @@ public class ManageOrdersView {
 	private DataModel<Dish> cartDataTable;
 	private List<Dish> cartList;
 	private boolean hasCartContent;
+	private double totalPrice;
 	
 	private boolean orderBtnClicked;
 	
@@ -75,15 +76,18 @@ public class ManageOrdersView {
 		hasCartContent = true;
 		
 		cartList.add(selectedDish);
+		totalPrice += selectedDish.getPrice();
 	}
 	
 	public void removeDishFromCart(ActionEvent event) {
 		int selectedDishIndex = cartDataTable.getRowIndex();
+		Dish selectedDish = cartList.get(selectedDishIndex);
 		cartList.remove(selectedDishIndex);	
 		
 		if(cartList.isEmpty()) {
 			hasCartContent = false;
 		}
+		totalPrice -= selectedDish.getPrice();
 	}
 	
 	public void showDeliveryData(ActionEvent event) {
@@ -170,6 +174,14 @@ public class ManageOrdersView {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 

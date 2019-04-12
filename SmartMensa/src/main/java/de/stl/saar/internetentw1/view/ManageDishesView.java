@@ -25,7 +25,7 @@ public class ManageDishesView {
 	@PostConstruct
 	public void initialize() {
 		dishService = new DishServiceImpl();
-		currentUser = (User) JsfUtils.getBeanAttribute("currentUser", "loginView", User.class);
+		currentUser = JsfUtils.getCurrentUserBeanAttribute();
 		List<Dish> dishes = dishService.findAllDishes();
 		dishesList = new ListDataModel<Dish>();
 		dishesList.setWrappedData(dishes);
