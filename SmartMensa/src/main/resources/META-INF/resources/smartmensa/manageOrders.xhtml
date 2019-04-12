@@ -94,14 +94,16 @@
 						<h:message for="txtName" id="msgName"/>
 					
 						<h:outputText value="#{labels.labelRoomNumber}" /> 
-						<h:inputText id="txtRoomNumber"/>
+						<h:inputText id="txtRoomNumber" value="#{manageOrdersView.room}" required="true" requiredMessage="#{msg.usernameRequired}">
+							<f:validator validatorId="roomValidator"/>
+						</h:inputText>
 						<h:message for="txtRoomNumber"/>
 						
 						<h:commandButton value="#{labels.labelConfirmOrder}" action="orderConfirmed">
 						</h:commandButton>
-						
 				</h:panelGrid>
 	</h:panelGroup>
+	
 			<br/>
 			<br/>
 			<h:commandButton value="#{labels.buttonBack}" action="overview" immediate="true"/>

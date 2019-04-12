@@ -1,38 +1,26 @@
 package de.stl.saar.internetentw1.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import javax.faces.validator.ValidatorException;
 
-import de.stl.saar.internetentw1.dao.classes.DishDaoImpl;
-import de.stl.saar.internetentw1.dao.classes.RoleDaoImpl;
-import de.stl.saar.internetentw1.dao.classes.UserDaoImpl;
-import de.stl.saar.internetentw1.dao.interfaces.DishDao;
-import de.stl.saar.internetentw1.dao.interfaces.UserDao;
-import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.Dish;
-import de.stl.saar.internetentw1.model.Role;
+import de.stl.saar.internetentw1.model.Room;
 import de.stl.saar.internetentw1.model.User;
 import de.stl.saar.internetentw1.service.interfaces.DishService;
 import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
-import de.stl.saar.internetentw1.utils.StringUtils;
 
 @ManagedBean
 @ViewScoped
-public class ManageOrdersView {
+public class ManageOrdersView implements Serializable{
 	private User currentUser;
 	private UserService userService;
 	private DishService dishService;
@@ -48,6 +36,7 @@ public class ManageOrdersView {
 	private boolean orderBtnClicked;
 	
 	private String name;
+	private Room room;
 	
 	@PostConstruct
 	public void initialize() {
@@ -67,7 +56,6 @@ public class ManageOrdersView {
 		
 		orderBtnClicked = false;
 		name = "";
-		
 	}
 	
 	public void addDishToCart(ActionEvent event) {
@@ -182,6 +170,14 @@ public class ManageOrdersView {
 
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 

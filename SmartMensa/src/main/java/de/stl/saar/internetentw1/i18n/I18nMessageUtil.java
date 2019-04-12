@@ -6,10 +6,10 @@ import java.util.ResourceBundle;
  * Encapsulates the keys for internationalization. Java code is not allowed
  * to call the message bundles but it has to use this class and its static
  * methods. Therefore the other classes do not have to know the names of 
- * the keys. This class contains the keys only for messages that are not error
- * messages.
+ * the keys. 
  * @author Christopher Olbertz
  * @author Johannes Gerwert
+ * @author Michelle Blau
  *
  */
 public class I18nMessageUtil {
@@ -34,6 +34,11 @@ public class I18nMessageUtil {
 	
 	private static final String LINK_MANAGE_DISHES= "manageDishes";
 	private static final String LINK_MANAGE_USERS= "manageUsers";
+	
+	private static final String ROOM_ERROR = "roomError";
+	private static final String BUILDING_NUMBER_ERROR ="buildingNumberError";
+	private static final String FLOOR_NUMBER_ERROR = "floorNumberError";
+	private static final String ROOM_NUMBER_ERROR = "roomNumberError";
 	
 	
 	
@@ -106,8 +111,25 @@ public class I18nMessageUtil {
 	public static final String getDishChangedDetail() {
 		return messagesResourceBundle.getString(DISH_CHANGED_DETAIL);
 	}
-
 	
+	public static String getRoomErrorString() {
+		return messagesResourceBundle.getString(ROOM_ERROR);
+	}
+
+	public static String getBuildingNumberErrorString() {
+		return messagesResourceBundle.getString(BUILDING_NUMBER_ERROR);
+	}
+
+	public static String getFloorNumberErrorString() {
+		return messagesResourceBundle.getString(FLOOR_NUMBER_ERROR);
+	}
+	
+	public static String getRoomNumberErrorString() {
+		return messagesResourceBundle.getString(ROOM_NUMBER_ERROR);
+	}
+
+
+
 	//-------------------------Labels---------------------------------	  
 	public static final String getLinkManageDishesString() {
 		return labelsResourceBundle.getString(LINK_MANAGE_DISHES);
@@ -116,6 +138,7 @@ public class I18nMessageUtil {
 	public static final String getLinkManageUsersString() {
 		return labelsResourceBundle.getString(LINK_MANAGE_USERS);
 	}
+
 
 
 

@@ -1,6 +1,8 @@
 package de.stl.saar.internetentw1.model;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable{
 	private int building;
 	private int floor;
 	private int room;
@@ -39,5 +41,24 @@ public class Room {
 	@Override
 	public String toString() {
 		return String.valueOf(building) + String.valueOf(floor) + String.valueOf(room);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o == null){
+			return false;
+		}	
+		
+		if(o instanceof Room){
+			Room cmpRoom = (Room) o;
+			int cmpBuildingNumber = cmpRoom.getBuilding();
+			int cmpFloorNumber	= cmpRoom.getFloor();
+			int cmpRoomNumber = cmpRoom.getRoom();
+			
+			return (cmpBuildingNumber == building) && (cmpFloorNumber == floor) && (cmpRoomNumber == room); 
+		}else {
+			return false;
+		}
+		
 	}
 }
