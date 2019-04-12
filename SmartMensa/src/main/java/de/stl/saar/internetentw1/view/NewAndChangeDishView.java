@@ -1,11 +1,16 @@
 package de.stl.saar.internetentw1.view;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.validator.ValidatorException;
 
 import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.Category;
@@ -125,6 +130,52 @@ public class NewAndChangeDishView {
 
 	public void setDish(Dish dish) {
 		this.dish = dish;
+	}
+	
+	public void validateDishName(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException{
+		String tempName = (String) value;
+		
+		if(tempName.isEmpty()) {
+			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getDishChangeErrorNameEmpty()));
+		} else if(tempName.trim().isEmpty()) {
+			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getDishChangeErrorNameEmpty()));
+		}
+	}
+	
+	public void validateDishPrice(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException{
+		String tempPriceString = (String) value;
+		
+		if(tempPriceString == null) {
+			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getDishChangeErrorPriceEmpty()));
+		}else if(tempPriceString.trim().isEmpty()) {
+			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getDishChangeErrorPriceEmpty()));
+		} else {
+			// Eine Zahl bestehend aus mindestens einer Zahl, ein Punkt und mindestens eine weitere Zahl 
+			// folgen koennen.
+			String regex = "\\d+(\\.{1}\\d+)?";
+			Pattern pattern = Pattern.compile(regex);
+			Matcher matcher = pattern.matcher((CharSequence) tempPriceString);
+			
+			if(!matcher.matches()) {
+				throw new ValidatorException(new FacesMessage(I18nMessageUtil.getDishChangeErrorPriceNotANumber()));
+			} else {
+				double tempPrice = Double.parseDouble(tempPriceString);
+				
+				if(tempPrice < 0.5 || tempPrice > 10.0) {
+					throw new ValidatorException(new FacesMessage(I18nMessageUtil.getDishChangeErrorPriceWrong()));
+				}
+			}
+		}
+		
+		
+	}
+	
+	public void validateDishCategory(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException{
+		String tempCategoryString = (String) value;
+		
+		if(tempCategoryString == null) {
+			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getDishChangeErrorCategoryEmpty()));
+		}
 	}
 
 }

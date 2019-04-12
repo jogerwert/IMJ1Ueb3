@@ -20,6 +20,12 @@ public class I18nMessageUtil {
 	
 	private static final String USERNAME_ALREADY_EXISTS_ERROR= "userNameAlreadyExistsError";
 	
+	private static final String DISH_CHANGE_ERROR_NAME_EMPTY= "dishChangeErrorNameEmpty";
+	private static final String DISH_CHANGE_ERROR_PRICE_EMPTY= "dishChangeErrorPriceEmpty";
+	private static final String DISH_CHANGE_ERROR_PRICE_NOT_A_NUMBER= "dishChangeErrorPriceNotANumber";
+	private static final String DISH_CHANGE_ERROR_PRICE_WRONG= "dishChangeErrorPriceWrong";
+	private static final String DISH_CHANGE_ERROR_CATEGORY_EMPTY= "dishChangeErrorCategoryEmpty";
+	
 	private static final String DISH_ADDED_SUMMARY= "dishAddedSummary";
 	private static final String DISH_ADDED_DETAIL= "dishAddedDetail";
 	private static final String DISH_CHANGED_SUMMARY= "dishChangedSummary";
@@ -62,6 +68,26 @@ public class I18nMessageUtil {
 	
 	public static String getErrorUsernameAlreadyExistsString() {
 		return messagesResourceBundle.getString(USERNAME_ALREADY_EXISTS_ERROR);
+	}
+	
+	public static String getDishChangeErrorNameEmpty() {
+		return messagesResourceBundle.getString(DISH_CHANGE_ERROR_NAME_EMPTY);
+	}
+	
+	public static String getDishChangeErrorPriceEmpty() {
+		return messagesResourceBundle.getString(DISH_CHANGE_ERROR_PRICE_EMPTY);
+	}
+	
+	public static String getDishChangeErrorPriceNotANumber() {
+		return messagesResourceBundle.getString(DISH_CHANGE_ERROR_PRICE_NOT_A_NUMBER);
+	}
+	
+	public static String getDishChangeErrorPriceWrong() {
+		return messagesResourceBundle.getString(DISH_CHANGE_ERROR_PRICE_WRONG);
+	}
+	
+	public static String getDishChangeErrorCategoryEmpty() {
+		return messagesResourceBundle.getString(DISH_CHANGE_ERROR_CATEGORY_EMPTY);
 	}
 	
 	public static final String getDishAddedSummary() {

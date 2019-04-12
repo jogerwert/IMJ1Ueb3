@@ -19,19 +19,30 @@
 		
 		<ui:define name="body">
 		<h:form>
-			<h:panelGrid columns="2">
+			<h:panelGrid columns="3">
 				<h:outputLabel value="#{labels.labelName}" />
-				<h:inputText value="#{newAndChangeDishView.dishName}" />
+				<h:inputText value="#{newAndChangeDishView.dishName}" 
+							 validator="#{newAndChangeDishView.validateDishName}" 
+							 id="txtDishName"/>
+				<h:message for="txtDishName" errorStyle="color:red;"/>
+				
 				<h:outputLabel value="#{labels.labelPrice}" />
-				<h:inputText value="#{newAndChangeDishView.dishPrice}" />
+				<h:inputText value="#{newAndChangeDishView.dishPrice}" 
+							 validator="#{newAndChangeDishView.validateDishPrice}"
+							 id="txtDishPrice"/>
+				<h:message for="txtDishPrice" errorStyle="color:red;"/>
+				
 				<h:outputLabel value="#{labels.labelCategory}" />
-				<h:selectOneListbox value="#{newAndChangeDishView.dishCategory}">
+				<h:selectOneListbox value="#{newAndChangeDishView.dishCategory}" 
+									validator="#{newAndChangeDishView.validateDishCategory}"
+									id="listboxDishCategory">
 					<f:selectItem itemLabel="#{labels.labelSoup}" itemValue="Suppe"/>
 					<f:selectItem itemLabel="#{labels.labelDessert}" itemValue="Nachtisch"/>
 					<f:selectItem itemLabel="#{labels.labelFruit}" itemValue="Obst"/>
 					<f:selectItem itemLabel="#{labels.labelSalad}" itemValue="Salat"/>
 					<f:selectItem itemLabel="#{labels.labelMainDish}" itemValue="Hauptgericht"/>
 				</h:selectOneListbox>
+				<h:message for="listboxDishCategory" errorStyle="color:red;"/>
 			</h:panelGrid>
 			<h:commandButton value="#{labels.buttonSave}"
 							 actionListener="#{newAndChangeDishView.createAndChangeDish}"
