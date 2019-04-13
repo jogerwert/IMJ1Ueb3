@@ -26,7 +26,7 @@ public interface DishDao {
 	List<Dish> findAllDishes();
 	
 	/**
-	 * Ermittelt eine spezifisches Gericht in der Datenbank.
+	 * Ermittelt ein spezifisches Gericht in der Datenbank.
 	 * @param dishId Die Id des gesuchten Gerichtes.
 	 * @return Das gesuchte Gericht.
 	 */

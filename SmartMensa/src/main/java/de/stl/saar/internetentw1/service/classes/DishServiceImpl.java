@@ -11,6 +11,7 @@ import de.stl.saar.internetentw1.service.interfaces.DishService;
  * Teil der Service-Schicht. Greift auf DishDao zu.
  * 
  * @author Michelle Blau
+ * @author Johannes Gerwert
  */
 public class DishServiceImpl implements DishService{
 

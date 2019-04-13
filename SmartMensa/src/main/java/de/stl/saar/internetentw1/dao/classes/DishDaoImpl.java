@@ -124,6 +124,13 @@ public class DishDaoImpl implements DishDao {
 		return dishes;
 	}
 	
+	/**
+	 * Ermittelt ein spezifisches Gericht in der Datenbank.
+	 * 
+	 * @author Johannes Gerwert
+	 * @param dishId Die Id des gesuchten Gerichtes.
+	 * @return Das gesuchte Gericht.
+	 */
 	@Override
 	public Dish findDish(final int dishId) {
 		Dish dish = null;
