@@ -1,33 +1,21 @@
 package de.stl.saar.internetentw1.view;
 
-import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlInputText;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.ComponentSystemEvent;
-import javax.faces.validator.ValidatorException;
-
-import de.stl.saar.internetentw1.dao.classes.*;
-import de.stl.saar.internetentw1.dao.interfaces.*;
-import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.*;
 import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
-import de.stl.saar.internetentw1.utils.StringUtils;
-import de.stl.saar.internetentw1.constants.*;
 
 
 /**
- * Diese Klasse repraesentiert das Fenster, in welchem der Benutzer sich ins Spiel einloggen kann.
- * @author Christopher
- *
+ * Diese Klasse repraesentiert das Fenster, das den Nutzer zur
+ * Aenderung seines Passwortes auffordert.
+ * 
+ * Zugehoerige xhtml-Datei: "changePassword.xhtml"
+ * 
+ * @author Michelle Blau
  */
 
 @ManagedBean
@@ -44,6 +32,11 @@ public class ChangePasswordView {
 		password = currentUser.getPassword();
 	}
 
+	/**
+	 * Uebernimmt das neu angegebene Passwort in der Datenbank
+	 * 
+	 * @return String, der den Dateinamen der Hauptnavigationsseite enthaelt
+	 */
 	public String saveAndGoToOverview() {
 		currentUser.setPassword(password);
 		currentUser.setIsPasswordChangeNecessary(false);

@@ -86,10 +86,8 @@
 				<h:panelGrid columns="3">
 						<h:outputText value="#{labels.labelName}" /> 
 						<h:inputText value="#{manageOrdersView.name}" id="txtName"
-							 validatorMessage="#{msg.usernameLengthError}"
-							 requiredMessage="#{msg.usernameRequired}" 
+							 requiredMessage="#{msg.nameRequired}" 
 							 required="true">
-							<f:validateLength minimum="3" maximum="10" />
 						</h:inputText>
 						<h:message for="txtName" id="msgName"/>
 					

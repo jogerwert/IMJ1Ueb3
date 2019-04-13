@@ -4,15 +4,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-
-import de.stl.saar.internetentw1.dao.classes.RoleDaoImpl;
-import de.stl.saar.internetentw1.dao.classes.UserDaoImpl;
-import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.model.User;
 import de.stl.saar.internetentw1.service.classes.RoleServiceImpl;
@@ -20,6 +15,13 @@ import de.stl.saar.internetentw1.service.interfaces.RoleService;
 import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 
+/**
+ * Diese Klasse repraesentiert das Fenster, in dem der Admin andere
+ * Benutzer veraendern und entfernen kann.
+ * 
+ * @author Michelle Blau
+ *
+ */
 @ManagedBean
 @ViewScoped
 public class ManageUsersView {
@@ -28,8 +30,8 @@ public class ManageUsersView {
 	private List<Role> roleList;
 	private String password;
 	private String username;
-	private String isAdmin;
-	private String isNotAdmin;
+	private String isAdmin; //wird auch nicht verwendet
+	private String isNotAdmin; //wird nicht verwendet
 	private String role;
 	private DataModel<User> userDataTable;
 	private List<User> userList;
@@ -37,6 +39,9 @@ public class ManageUsersView {
 	private UserService userService;
 	private RoleService roleService;
 	
+	/**
+	 * Initialisiert u.a. die Tabelle mit den Usern aus der Datenbank
+	 */
 	@PostConstruct
 	public void initialize() {
 		currentUser = JsfUtils.getCurrentUserBeanAttribute();
@@ -63,6 +68,10 @@ public class ManageUsersView {
 
 	}
 	
+	/**
+	 * Entfernt einen ausgewaehlten User aus der Datenbank
+	 * @param event
+	 */
 	public void delete(ActionEvent event) {
 		int selectedUserIndex = userDataTable.getRowIndex();
 		User selectedUser = this.userList.get(selectedUserIndex);
@@ -71,7 +80,12 @@ public class ManageUsersView {
 		userService.removeUserById(selectedUser.getUserId());
 	}
 	
-	
+	/**
+	 * Wechselt bei Klick auf den "Aendern"-Button zur Ansicht zum
+	 * Aendern eines Users. Der Username wird als Parameter dorthin
+	 * mitgegeben.
+	 * @return Dateiname der Seite zum Aendern eines Users
+	 */
 	public String toChangeExistingUser() {
 		return "changeExistingUser";
 	}

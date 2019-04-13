@@ -7,6 +7,11 @@ import de.stl.saar.internetentw1.dao.interfaces.DishDao;
 import de.stl.saar.internetentw1.model.Dish;
 import de.stl.saar.internetentw1.service.interfaces.DishService;
 
+/**
+ * Teil der Service-Schicht. Greift auf DishDao zu.
+ * 
+ * @author Michelle Blau
+ */
 public class DishServiceImpl implements DishService{
 
 	private DishDao dishDao;

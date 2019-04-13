@@ -53,6 +53,12 @@ public class User {
 		this.role = role;
 	}
 	
+	/**
+	 * Ermittelt ob das aktuelle User-Objekt ein Admin ist
+	 * 
+	 * @author Michelle Blau
+	 * @return true, falls Admin, sonst false
+	 */
 	public boolean isAdmin() {
 		return StringUtils.areStringsEqual(this.role.getRoleName(), ADMIN);
 	}

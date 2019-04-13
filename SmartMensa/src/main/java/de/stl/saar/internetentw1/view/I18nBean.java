@@ -11,8 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
-
-import de.stl.saar.internetentw1.view.*;
 import de.stl.saar.internetentw1.utils.*;
 import de.stl.saar.internetentw1.model.*;
 import de.stl.saar.internetentw1.constants.*;

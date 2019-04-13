@@ -7,6 +7,11 @@ import de.stl.saar.internetentw1.dao.interfaces.RoleDao;
 import de.stl.saar.internetentw1.model.Role;
 import de.stl.saar.internetentw1.service.interfaces.RoleService;
 
+/**
+ * Teil der Service-Schicht. Greift auf RoleDao zu.
+ * 
+ * @author Michelle Blau
+ */
 public class RoleServiceImpl implements RoleService{
 
 	private RoleDao roleDao;

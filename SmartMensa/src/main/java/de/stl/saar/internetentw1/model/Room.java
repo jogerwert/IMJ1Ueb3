@@ -3,6 +3,10 @@ package de.stl.saar.internetentw1.model;
 import java.io.Serializable;
 
 public class Room implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8245029175774078911L;
 	private int building;
 	private int floor;
 	private int room;

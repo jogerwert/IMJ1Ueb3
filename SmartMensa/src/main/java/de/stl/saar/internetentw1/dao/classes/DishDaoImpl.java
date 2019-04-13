@@ -14,9 +14,10 @@ import de.stl.saar.internetentw1.utils.RandomUtils;
 /**
  * Simuliert die Dish-Tabelle einer Datenbank mithilfe
  * einer Map, wobei der Primärschlüssel der Schlüssel der
- * Map ist. 
+ * Map ist.
  * @author christopher
  * @author Johannes Gerwert
+ * @author Michelle Blau
  *
  */
 public class DishDaoImpl implements DishDao {

@@ -20,6 +20,7 @@ public class JsfUtils {
 	private static final String PARAM_USER_ID = "userId";
 	private static final String LOGINVIEW_SESSION_BEAN = "loginView";
 	
+	
 	public static long getUserIdParameter() {
 		final String userIdAsString = getParameterByName(PARAM_USER_ID);
 		if (StringUtils.isNotEmpty(userIdAsString)) {
@@ -97,6 +98,7 @@ public class JsfUtils {
 	
 	/**
 	 * Gibt den Aktuell eingeloggten User aus der Session-Scoped ManagedBean "LoginView" zurueck
+	 * @author Michelle Blau
 	 * @return aktuell eingeloggter User
 	 */
 	public static User getCurrentUserBeanAttribute() {
@@ -106,7 +108,11 @@ public class JsfUtils {
 	
 	/**
 	 * Gibt das aktuell verwendete UserService-Objekt aus der Session-Scoped ManagedBean "LoginView" zurueck.
-	 * Dieses Objekt sorgt dafür, dass Änderungen in der User-Datenbank auch über die gesamte Session hinweg sichtbar sind.
+	 * Dieses Objekt sorgt dafuer, dass Aenderungen in der User-Datenbank auch ueber die gesamte Session hinweg sichtbar sind.
+	 * 
+	 * (Moeglicherweise nicht mehr notwendig, da im Service enthaltene  Dao-Objekte jetzt Singletons sind?)
+	 * 
+	 * @author Michelle Blau
 	 * @return aktuell verwendeter UserService
 	 */
 	public static UserService getUserServiceBeanAttribute() {
@@ -116,7 +122,11 @@ public class JsfUtils {
 	
 	/**
 	 * Gibt das aktuell verwendete DishService-Objekt aus der Session-Scoped ManagedBean "LoginView" zurueck.
-	 * Dieses Objekt sorgt dafür, dass Änderungen in der Dish-Datenbank auch über die gesamte Session hinweg sichtbar sind.
+	 * Dieses Objekt sorgt dafuer, dass Aenderungen in der Dish-Datenbank auch ueber die gesamte Session hinweg sichtbar sind.
+	 * 
+	 * (Moeglicherweise nicht mehr notwendig, da im Service enthaltene Dao-Objekte jetzt Singletons sind?)
+	 * 
+	 * @author Michelle Blau
 	 * @return aktuell verwendeter DishService
 	 */
 	public static DishService getDishServiceBeanAttribute() {

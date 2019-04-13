@@ -1,6 +1,7 @@
 package de.stl.saar.internetentw1.view;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +19,21 @@ import de.stl.saar.internetentw1.service.interfaces.DishService;
 import de.stl.saar.internetentw1.service.interfaces.UserService;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 
+/**
+ * Diese Klasse repraesentiert das Fenster, in dem der Benutzer Bestellungen
+ * aufgeben kann. 
+ * 
+ * @author Michelle Blau
+ *
+ */
+
 @ManagedBean
 @ViewScoped
 public class ManageOrdersView implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3346910387051947013L;
 	private User currentUser;
 	private UserService userService;
 	private DishService dishService;
@@ -38,6 +51,10 @@ public class ManageOrdersView implements Serializable{
 	private String name;
 	private Room room;
 	
+	/**
+	 * Initialisiert u.a. die Tabelle mit den Gerichten und die Tabelle mit dem
+	 * Warenkorbinhalt
+	 */
 	@PostConstruct
 	public void initialize() {
 		currentUser = JsfUtils.getCurrentUserBeanAttribute();
@@ -58,6 +75,11 @@ public class ManageOrdersView implements Serializable{
 		name = "";
 	}
 	
+	/**
+	 * Fuegt ein Gericht dem Warenkorb hinzu und erhoeht den Gesamtpreis.
+	 * Setzt ein Flag, das anzeigt, ob in dem Warenkorb Inhalt ist.
+	 * @param event
+	 */
 	public void addDishToCart(ActionEvent event) {
 		int selectedDishIndex = dishDataTable.getRowIndex();
 		Dish selectedDish = dishList.get(selectedDishIndex);
@@ -67,6 +89,11 @@ public class ManageOrdersView implements Serializable{
 		totalPrice += selectedDish.getPrice();
 	}
 	
+	/**
+	 * Entfernt ein Gericht aus dem Warenkorb und reduziert den Gesamtpreis.
+	 * Setzt ein Flag, das anzeigt, ob in dem Warenkorb noch Inhalt ist.
+	 * @param event
+	 */
 	public void removeDishFromCart(ActionEvent event) {
 		int selectedDishIndex = cartDataTable.getRowIndex();
 		Dish selectedDish = cartList.get(selectedDishIndex);

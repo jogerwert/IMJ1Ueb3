@@ -9,26 +9,23 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.validator.ValidatorException;
-
-import de.stl.saar.internetentw1.dao.classes.*;
-import de.stl.saar.internetentw1.dao.interfaces.*;
 import de.stl.saar.internetentw1.i18n.I18nMessageUtil;
 import de.stl.saar.internetentw1.model.*;
 import de.stl.saar.internetentw1.service.classes.DishServiceImpl;
 import de.stl.saar.internetentw1.service.classes.UserServiceImpl;
 import de.stl.saar.internetentw1.service.interfaces.DishService;
 import de.stl.saar.internetentw1.service.interfaces.UserService;
-import de.stl.saar.internetentw1.utils.StringUtils;
-import de.stl.saar.internetentw1.constants.*;
 
 
 /**
- * Diese Klasse repraesentiert das Fenster, in welchem der Benutzer sich ins Spiel einloggen kann.
+ * Diese Klasse repraesentiert das Fenster, in welchem der Benutzer sich einloggen kann.
+ * Ihre Attribute userService, dishService und currentUser werden von den anderen
+ * ManagedBeans verwendet.
+ * 
  * @author Christopher
- *
+ * @author Michelle Blau
  */
 
 @ManagedBean
@@ -63,16 +60,14 @@ public class LoginView {
 			return false;
 		}
 	}
-	
-	public boolean isUserAdmin() {
-		if(isUserLoggedIn()) {
-			if(currentUser.getRole().getRoleName().equals("admin")) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
+
+	/**
+	 * Loggt den angegebenen User ein. Danach wird der User entweder
+	 * zum Fenster fuer die Passwortaenderung weitergeleitet oder 
+	 * zur Hauptnavigationsseite.
+	 * 
+	 * @return Dateiname fuer die Seite zur Passwortaenderung/Hauptnavigation oder null falls User nicht existiert
+	 */
 	public String login() {
 		List<User> userList = this.userService.findAllUsers();
 		for (final User user: userList) {
@@ -95,6 +90,67 @@ public class LoginView {
 		currentUser = null;
 		
 		return "login";
+	}
+	
+
+/**
+ * Ueberprueft das eingegebene Passwort. Existiert kein User mit dem angegebenen Passwort in der Datenbank, so wird
+ * eine ValidatorException geworfen.
+ * 
+ * @param facesContext - nicht verwendet
+ * @param component - nicht verwendet
+ * @param value - das eingegebene Passwort
+ * @throws ValidatorException
+ */
+	public void validatePassword(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException {
+		String tmpPassword = (String) value;
+		User tmpUser = null;
+
+		List<User> userList = this.userService.findAllUsers();
+		for(User u : userList) {
+			if(u.getUsername().equals(this.username)) {
+				if(u.getPassword().equals(tmpPassword)) {
+					tmpUser = u;
+				}
+			}
+		}
+		
+		if(tmpUser == null) {
+			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getAuthenticationErrorString()));	
+		}
+		
+	}
+	
+	/**
+	 * Ueberprueft, ob ein angegebener Username existiert. Ist dies nicht der Fall, wird eine ValidatorException
+	 * geworfen.
+	 * 
+	 * @param facesContext - nicht verwendet
+	 * @param component - nicht verwendet
+	 * @param value - der Username
+	 * @throws ValidatorException
+	 */
+	public void validateUsername(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException {
+		String tmpUsername = (String) value;
+		
+		if(!userService.doesUsernameExist(tmpUsername)) {
+			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getAuthenticationErrorUsernameString()));		
+		}
+	}
+	
+	/**
+	 * Uebernimmt den Usernamen, bevor das Passwort validiert wird, damit "validatePassword()"
+	 * ueberpruefen kann, ob sowohl Passwort als auch Username in der Datenbank vorhanden sind.
+	 * 
+	 * Dies ist notwendig, da man normalerweise nur einzelne Eingabefelder validieren kann.
+	 * 
+	 * @param event
+	 */
+	public void postValidateUsername(ComponentSystemEvent event) {
+		HtmlInputText inputText = (HtmlInputText)event.getComponent();
+		if (inputText.getValue() != null) {
+			this.username = inputText.getValue().toString();
+		}
 	}
 	
 	public String getUsername() {
@@ -146,41 +202,5 @@ public class LoginView {
 	public void setSelectedUserName(String selectedUserName) {
 		this.selectedUserName = selectedUserName;
 	}
-
-	
-	public void validatePassword(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException {
-		String tmpPassword = (String) value;
-		User tmpUser = null;
-
-		List<User> userList = this.userService.findAllUsers();
-		for(User u : userList) {
-			if(u.getUsername().equals(this.username)) {
-				if(u.getPassword().equals(tmpPassword)) {
-					tmpUser = u;
-				}
-			}
-		}
-		
-		if(tmpUser == null) {
-			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getAuthenticationErrorString()));	
-		}
-		
-	}
-	
-	public void validateUsername(FacesContext facesContext, UIComponent component, Object value)throws ValidatorException {
-		String tmpUsername = (String) value;
-		
-		if(!userService.doesUsernameExist(tmpUsername)) {
-			throw new ValidatorException(new FacesMessage(I18nMessageUtil.getAuthenticationErrorUsernameString()));		
-		}
-	}
-	
-	public void postValidateUsername(ComponentSystemEvent event) {
-		HtmlInputText inputText = (HtmlInputText)event.getComponent();
-		if (inputText.getValue() != null) {
-			this.username = inputText.getValue().toString();
-		}
-	}
-	
 	
 }

@@ -17,6 +17,7 @@ import de.stl.saar.internetentw1.utils.StringUtils;
  * Map ist. 
  * @author christopher
  * @author Johannes Gerwert
+ * @author Michelle Blau
  *
  */
 public class RoleDaoImpl implements RoleDao {

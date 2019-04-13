@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 
 import de.stl.saar.internetentw1.dao.interfaces.RoleDao;
 import de.stl.saar.internetentw1.dao.interfaces.UserDao;
@@ -20,7 +19,7 @@ import de.stl.saar.internetentw1.utils.RandomUtils;
  * Map ist. 
  * @author christopher
  * @author Johannes Gerwert
- *
+ * @author Michelle Blau
  */
 public class UserDaoImpl implements UserDao {
 	

@@ -8,6 +8,11 @@ import de.stl.saar.internetentw1.dao.interfaces.UserDao;
 import de.stl.saar.internetentw1.model.User;
 import de.stl.saar.internetentw1.service.interfaces.UserService;
 
+/**
+ * Teil der Service-Schicht. Greift auf UserDao zu.
+ * 
+ * @author Michelle Blau
+ */
 public class UserServiceImpl implements UserService {
 
 	private UserDao userDao;

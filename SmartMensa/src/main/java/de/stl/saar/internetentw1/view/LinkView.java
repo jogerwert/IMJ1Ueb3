@@ -9,7 +9,9 @@ import de.stl.saar.internetentw1.model.User;
 import de.stl.saar.internetentw1.utils.JsfUtils;
 
 /**
- * Diese Klasse verwaltet die Hauptnavigation für normale User und Admins
+ * Diese Klasse repraesentiert das Hauptnavigations-Fenster für normale User und Admins.
+ * Die zugehoerige xhtml-Datei ist "overview.xhtml"
+ * 
  * @author Michelle Blau
  *
  */
@@ -19,7 +21,7 @@ import de.stl.saar.internetentw1.utils.JsfUtils;
 public class LinkView {
 	private String isAdmin;
 	private User currentUser;	
-	private String selectedUserName;
+	private String selectedUserName; //nicht verwendet
 
 	
 	
